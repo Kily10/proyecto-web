@@ -1,17 +1,10 @@
-# =========================
-# 🔵 ANGULAR / NODE
-# =========================
+# Node / Angular
 node_modules/
 dist/
 .angular/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-# =========================
-# 🟣 LARAVEL / PHP
-# =========================
+# Laravel
 /vendor/
 /.env
 .env.*
@@ -22,26 +15,10 @@ yarn-error.log*
 /public/build
 /public/hot
 
-# =========================
-# ⚙ CONFIG / IDE
-# =========================
+# IDE
 .vscode/
 .idea/
-.fleet/
-.zed/
-.phpactor.json
-.phpunit.result.cache
-.phpunit.cache
 
-# =========================
-# 🧠 SISTEMA OPERATIVO
-# =========================
+# OS
 .DS_Store
 Thumbs.db
-
-# =========================
-# 🔐 OTROS
-# =========================
-auth.json
-Homestead.json
-Homestead.yaml
