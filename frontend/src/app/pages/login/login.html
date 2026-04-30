@@ -1,0 +1,44 @@
+<header>
+  <img src="logo.png" class="logo">
+
+  <div>
+    <h1>FILTROPARTS</h1>
+    <p>Cursos de Mecánica</p>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#">Menú</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="images">
+    <img src="filtros.jpg">
+    <img src="mec.jpg">
+  </div>
+
+
+  <div class="login-box">
+    <h2>Iniciar Sesión</h2>
+
+    <div class="field">
+      <span class="icon">@</span>
+      <input [(ngModel)]="email" placeholder="Correo">
+    </div>
+
+    <div class="field">
+      <span class="icon">🔒</span>
+      <input [(ngModel)]="password" type="password" placeholder="Contraseña">
+    </div>
+
+    <button (click)="login()">Ingresar</button>
+
+    <p class="extra">¿Olvidaste tu contraseña?</p>
+  </div>
+
+</div>
