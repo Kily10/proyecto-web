@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login';
-import { HistorialComponent } from './pages/historial/historial';
 import { HomeComponent } from './pages/home/home';
+import { CursosComponent } from './pages/cursos/cursos';
+import { HistorialComponent } from './pages/historial/historial';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },   // login
-  { path: 'home', component: HomeComponent }, // página principal
-  { path: 'historial', component: HistorialComponent } // historial
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'cursos', component: CursosComponent },
+  { path: 'historial', component: HistorialComponent }
 ];

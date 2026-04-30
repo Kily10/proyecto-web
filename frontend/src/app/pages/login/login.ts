@@ -33,7 +33,7 @@ export class LoginComponent {
         alert('Login correcto');
 
         // 🔥 REDIRECCIÓN AL HISTORIAL
-        this.router.navigate(['/historial']);
+        this.router.navigate(['/home']);
 
       } else {
         alert('Datos incorrectos');
