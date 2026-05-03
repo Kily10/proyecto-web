@@ -1,1 +1,81 @@
-<p>home works!</p>
+<div class="home-container">
+
+  <!-- 🔝 NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <h2>EduFlow</h2>
+    </div>
+
+    <nav class="nav-links">
+      <a routerLink="/home">Inicio</a>
+      <a routerLink="/cursos">Cursos</a>
+      <a routerLink="/historial">Historial</a>
+      <button class="logout-btn" (click)="logout()">Salir</button>
+    </nav>
+  </header>
+
+  <!-- 👋 HERO / BIENVENIDA -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Aprende Mecánica Profesional</h1>
+      <p>Domina el mantenimiento automotriz con cursos prácticos</p>
+
+      <button class="primary-btn" routerLink="/cursos">
+        Explorar Cursos
+      </button>
+    </div>
+  </section>
+
+  <!-- 📚 SECCIÓN CURSOS -->
+  <section class="courses">
+
+    <h2 class="section-title">Cursos Destacados</h2>
+
+    <div class="course-grid">
+
+      <!-- CARD 1 -->
+      <div class="course-card">
+        <h3>Mecánica Básica</h3>
+        <p>Aprende lo esencial del motor paso a paso</p>
+        <button routerLink="/cursos">Ver curso</button>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="course-card">
+        <h3>Sistema de Filtros</h3>
+        <p>Mantenimiento y cambio de filtros correctamente</p>
+        <button routerLink="/cursos">Ver curso</button>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="course-card">
+        <h3>Diagnóstico Automotriz</h3>
+        <p>Detecta fallas con herramientas profesionales</p>
+        <button routerLink="/cursos">Ver curso</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ⭐ BENEFICIOS -->
+  <section class="features">
+
+    <div class="feature">
+      <h3>100% Práctico</h3>
+      <p>Aprende haciendo con ejemplos reales</p>
+    </div>
+
+    <div class="feature">
+      <h3>Acceso 24/7</h3>
+      <p>Estudia cuando quieras</p>
+    </div>
+
+    <div class="feature">
+      <h3>Certificación</h3>
+      <p>Obtén certificado al finalizar</p>
+    </div>
+
+  </section>
+
+</div>
