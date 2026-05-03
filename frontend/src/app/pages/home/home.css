@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  padding: 20px 60px;
   background: #111827;
   border-bottom: 1px solid #1f2937;
 }
@@ -62,14 +62,12 @@
 }
 
 .hero-text h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 48px;
+  font-weight: 700;
 }
 
 .hero-text p {
-  font-size: 16px;
-  color: #9ca3af;
-  margin-bottom: 20px;
+  font-size: 18px;
 }
 
 /* BOTÓN PRINCIPAL */
@@ -110,8 +108,8 @@
 /* CARD */
 .course-card {
   background: #1e293b;
-  padding: 20px;
-  width: 250px;
+  padding: 25px;
+  width: 280px;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   transition: 0.3s;
