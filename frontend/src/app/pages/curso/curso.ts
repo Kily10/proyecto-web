@@ -75,10 +75,11 @@ export class CursoComponent {
     // ✅ NUEVO REGISTRO
     const nuevo = {
       userId: user.id,
-      cursoId: this.curso.id,   // 🔥 importante
+      cursoId: this.curso.id,
       curso: this.curso.titulo,
-      fecha: new Date().toLocaleDateString(),
-      progreso: 0
+      fecha: new Date().toLocaleString(),
+      progreso: 0,
+      plan: user.plan || 'Gratis'
     };
 
     historial.push(nuevo);

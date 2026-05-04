@@ -29,8 +29,9 @@ export class LoginComponent {
     if (this.email === 'admin@test.com' && this.password === '1234') {
 
       const user = {
-        id: 1,
-        email: this.email
+          id: 1,
+          email: this.email,
+          loginTime: new Date().toLocaleString()
       };
 
       localStorage.setItem('user', JSON.stringify(user));

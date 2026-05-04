@@ -3,20 +3,28 @@
   <h1>📊 Mi Historial</h1>
 
   <div *ngIf="historial.length === 0" class="empty">
-    📭 Aún no tienes cursos inscritos
+    📭 Aún no tienes registros
   </div>
 
   <div class="card" *ngFor="let h of historial; let i = index">
 
-    <h3>{{ h.curso }}</h3>
+    <!-- 🟡 CURSOS -->
+    <div *ngIf="h.tipo !== 'suscripcion'">
+      <h3>{{ h.curso }}</h3>
+      <p>📅 Fecha: {{ h.fecha }}</p>
+      <p>📈 Progreso: {{ h.progreso }}%</p>
+      <p>🏷️ Plan: {{ h.plan }}</p>
 
-    <p>📅 Fecha: {{ h.fecha }}</p>
+      <div class="acciones">
+        <button (click)="irCurso(h.cursoId)">Ver curso</button>
+        <button class="delete" (click)="eliminar(i)">Eliminar</button>
+      </div>
+    </div>
 
-    <p>📈 Progreso: {{ h.progreso }}%</p>
-
-    <div class="acciones">
-      <button (click)="irCurso(h.cursoId)">Ver curso</button>
-      <button class="delete" (click)="eliminar(i)">Eliminar</button>
+    <!-- 🔵 SUSCRIPCIONES -->
+    <div *ngIf="h.tipo === 'suscripcion'">
+      <h3>💳 Suscripción {{ h.plan }}</h3>
+      <p>📅 Fecha: {{ h.fecha }}</p>
     </div>
 
   </div>

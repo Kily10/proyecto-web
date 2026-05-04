@@ -1,0 +1,53 @@
+.planes {
+  padding: 40px;
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.planes h1 {
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 12px;
+  width: 250px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #94a3b8;
+  margin-bottom: 15px;
+}
+
+.card button {
+  background: #38bdf8;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #0f172a;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background: #0ea5e9;
+}
