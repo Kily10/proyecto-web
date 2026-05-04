@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class CursoComponent {
 
   curso: any;
-  user: any;
+    user: any;
 
   cursos = [
     {
@@ -99,7 +99,7 @@ export class CursoComponent {
       plan: this.user.plan || 'Gratis'
     };
 
-    historial.push(nuevo);
+      historial.push(nuevo);
     localStorage.setItem('historial', JSON.stringify(historial));
 
     alert('Inscripción guardada ✅');
