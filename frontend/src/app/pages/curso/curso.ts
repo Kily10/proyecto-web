@@ -46,13 +46,46 @@ export class CursoComponent {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-  const id = Number(this.route.snapshot.paramMap.get('id'));
-
-  this.curso = this.cursos.find(c => c.id === id);
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.curso = this.cursos.find(c => c.id === id);
   }
 
   inscribirse() {
-    alert('Te inscribiste en ' + this.curso.titulo);
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // 🔴 validación básica
+    if (!user.id) {
+      alert('Debes iniciar sesión');
+      return;
+    }
+
+    const historial = JSON.parse(localStorage.getItem('historial') || '[]');
+
+    // 🔥 EVITAR DUPLICADOS
+    const existe = historial.find(
+      (h: any) => h.userId === user.id && h.cursoId === this.curso.id
+    );
+
+    if (existe) {
+      alert('Ya estás inscrito en este curso ❗');
+      return;
+    }
+
+    // ✅ NUEVO REGISTRO
+    const nuevo = {
+      userId: user.id,
+      cursoId: this.curso.id,   // 🔥 importante
+      curso: this.curso.titulo,
+      fecha: new Date().toLocaleDateString(),
+      progreso: 0
+    };
+
+    historial.push(nuevo);
+
+    localStorage.setItem('historial', JSON.stringify(historial));
+
+    alert('Inscripción guardada ✅');
   }
 
 }

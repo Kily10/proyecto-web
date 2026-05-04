@@ -1,7 +1,24 @@
-<h2>Historial</h2>
+<div class="historial">
 
-<ul>
-  <li *ngFor="let item of historial">
-    {{ item.accion }} - {{ item.created_at }}
-  </li>
-</ul>
+  <h1>📊 Mi Historial</h1>
+
+  <div *ngIf="historial.length === 0" class="empty">
+    📭 Aún no tienes cursos inscritos
+  </div>
+
+  <div class="card" *ngFor="let h of historial; let i = index">
+
+    <h3>{{ h.curso }}</h3>
+
+    <p>📅 Fecha: {{ h.fecha }}</p>
+
+    <p>📈 Progreso: {{ h.progreso }}%</p>
+
+    <div class="acciones">
+      <button (click)="irCurso(h.cursoId)">Ver curso</button>
+      <button class="delete" (click)="eliminar(i)">Eliminar</button>
+    </div>
+
+  </div>
+
+</div>
