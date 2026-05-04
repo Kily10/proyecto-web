@@ -4,12 +4,15 @@ import { HomeComponent } from './pages/home/home';
 import { CursosComponent } from './pages/cursos/cursos';
 import { HistorialComponent } from './pages/historial/historial';
 import { CursoComponent } from './pages/curso/curso';
+import { authGuard } from './auth.guard';
 
-export const routes: Routes = [
+export const routes = [
+
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'cursos', component: CursosComponent },
-  { path: 'curso/:id', component: CursoComponent },
-  
-  { path: 'historial', component: HistorialComponent }
+
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'cursos', component: CursosComponent, canActivate: [authGuard] },
+  { path: 'curso/:id', component: CursoComponent, canActivate: [authGuard] },
+  { path: 'historial', component: HistorialComponent, canActivate: [authGuard] }
+
 ];
