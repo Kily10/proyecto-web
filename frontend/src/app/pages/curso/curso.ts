@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-curso',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './curso.html',
   styleUrls: ['./curso.css']
 })
