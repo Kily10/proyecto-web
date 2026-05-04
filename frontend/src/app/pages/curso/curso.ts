@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 export class CursoComponent {
 
   curso: any;
+  user: any;
 
   cursos = [
     {
@@ -21,69 +22,84 @@ export class CursoComponent {
       precio: 0,
       rating: 5,
       emoji: '💻',
-      temas: ['Componentes', 'Rutas', 'Servicios', 'HTTP']
+      nivel: 'Gratis',
+      temas: ['Componentes', 'Rutas', 'Servicios']
     },
     {
       id: 2,
+      titulo: 'Python',
+      descripcion: 'Programación desde cero',
+      precio: 20,
+      rating: 5,
+      emoji: '🐍',
+      nivel: 'Platino',
+      temas: ['Variables', 'Funciones', 'Listas']
+    },
+    {
+      id: 3,
       titulo: 'Data Science',
       descripcion: 'Análisis de datos',
       precio: 25,
       rating: 4,
       emoji: '📊',
-      temas: ['Python', 'Pandas', 'Gráficas']
+      nivel: 'Gold',
+      temas: ['Pandas', 'Gráficas', 'Modelos']
     },
     {
-      id: 3,
+      id: 4,
       titulo: 'Diseño UI',
       descripcion: 'Interfaces modernas',
-      precio: 15,
+      precio: 30,
       rating: 4,
       emoji: '🎨',
-      temas: ['Figma', 'UX', 'Colores']
+      nivel: 'Diamante',
+      temas: ['UX', 'Figma', 'Prototipos']
     }
   ];
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.curso = this.cursos.find(c => c.id === id);
+
+    if (!this.curso) {
+      alert('Curso no encontrado');
+    }
   }
 
   inscribirse() {
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    // 🔴 validación básica
-    if (!user.id) {
+    if (!this.user.id) {
       alert('Debes iniciar sesión');
       return;
     }
 
     const historial = JSON.parse(localStorage.getItem('historial') || '[]');
 
-    // 🔥 EVITAR DUPLICADOS
+    // ❌ evitar duplicados
     const existe = historial.find(
-      (h: any) => h.userId === user.id && h.cursoId === this.curso.id
+      (h: any) => h.userId === this.user.id && h.cursoId === this.curso.id
     );
 
     if (existe) {
-      alert('Ya estás inscrito en este curso ❗');
+      alert('Ya estás inscrito ❗');
       return;
     }
 
-    // ✅ NUEVO REGISTRO
+    // ✅ guardar inscripción
     const nuevo = {
-      userId: user.id,
+      userId: this.user.id,
       cursoId: this.curso.id,
       curso: this.curso.titulo,
       fecha: new Date().toLocaleString(),
       progreso: 0,
-      plan: user.plan || 'Gratis'
+      plan: this.user.plan || 'Gratis'
     };
 
     historial.push(nuevo);
-
     localStorage.setItem('historial', JSON.stringify(historial));
 
     alert('Inscripción guardada ✅');
