@@ -21,6 +21,16 @@
       </button>
     </div>
 
+    <div class="material">
+       <h2>📚 Material del curso</h2>
+       <ul>
+         <li *ngFor="let tema of curso.temas">
+          ▶ {{ tema }}
+         </li>
+       </ul>
+    </div>
+     
+
     <div class="emoji">
       {{ curso?.emoji }}
     </div>
