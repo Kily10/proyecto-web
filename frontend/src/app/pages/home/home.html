@@ -1,79 +1,66 @@
-<div class="home-container">
+<div class="home">
 
   <!-- 🔝 NAVBAR -->
   <header class="navbar">
-    <div class="logo">
-      <h2>EduFlow</h2>
-    </div>
+    <div class="logo">EduFlow</div>
 
-    <nav class="nav-links">
+    <nav class="menu">
       <a routerLink="/home">Inicio</a>
       <a routerLink="/cursos">Cursos</a>
       <a routerLink="/historial">Historial</a>
-      <button class="logout-btn" (click)="logout()">Salir</button>
     </nav>
+
+    <div class="actions">
+      <button class="btn-outline">Perfil</button>
+      <button class="btn-danger" (click)="logout()">Salir</button>
+    </div>
   </header>
 
-  <!-- 👋 HERO / BIENVENIDA -->
+  <!-- 🚀 HERO -->
   <section class="hero">
-    <div class="hero-text">
-      <h1>Aprende Mecánica Profesional</h1>
-      <p>Domina el mantenimiento automotriz con cursos prácticos</p>
+    <h1>Aprende nuevas habilidades 🚀</h1>
+    <p>Explora cursos de programación, diseño y tecnología</p>
 
-      <button class="primary-btn" routerLink="/cursos">
-        Explorar Cursos
-      </button>
+    <div class="search">
+      <input 
+        type="text" 
+        placeholder="Buscar cursos..."
+        (input)="search($event)"
+      >
     </div>
   </section>
 
-  <!-- 📚 SECCIÓN CURSOS -->
+  <!-- 📚 CATEGORÍAS -->
+  <section class="categories">
+    <button (click)="filter('all')" class="active">Todos</button>
+    <button (click)="filter('programacion')">Programación</button>
+    <button (click)="filter('data')">Data Science</button>
+    <button (click)="filter('diseno')">Diseño</button>
+  </section>
+
+  <!-- 📦 CURSOS -->
   <section class="courses">
 
-    <h2 class="section-title">Cursos Destacados</h2>
+    <div class="card" *ngFor="let curso of cursos">
 
-    <div class="course-grid">
-
-      <!-- CARD 1 -->
-      <div class="course-card">
-        <h3>Mecánica Básica</h3>
-        <p>Aprende lo esencial del motor paso a paso</p>
-        <button routerLink="/cursos">Ver curso</button>
+      <div class="emoji">
+        {{ curso.emoji }}
       </div>
 
-      <!-- CARD 2 -->
-      <div class="course-card">
-        <h3>Sistema de Filtros</h3>
-        <p>Mantenimiento y cambio de filtros correctamente</p>
-        <button routerLink="/cursos">Ver curso</button>
+      <h3>{{ curso.titulo }}</h3>
+
+      <p>{{ curso.descripcion }}</p>
+
+      <div class="info">
+        ⭐ {{ curso.rating }}
+        <span *ngIf="curso.precio === 0">Gratis</span>
+        <span *ngIf="curso.precio > 0">${{ curso.precio }}</span>
       </div>
 
-      <!-- CARD 3 -->
-      <div class="course-card">
-        <h3>Diagnóstico Automotriz</h3>
-        <p>Detecta fallas con herramientas profesionales</p>
-        <button routerLink="/cursos">Ver curso</button>
-      </div>
+      <button class="btn-primary" (click)="verCurso(curso)">
+        Ver Curso
+      </button>
 
-    </div>
-
-  </section>
-
-  <!-- ⭐ BENEFICIOS -->
-  <section class="features">
-
-    <div class="feature">
-      <h3>100% Práctico</h3>
-      <p>Aprende haciendo con ejemplos reales</p>
-    </div>
-
-    <div class="feature">
-      <h3>Acceso 24/7</h3>
-      <p>Estudia cuando quieras</p>
-    </div>
-
-    <div class="feature">
-      <h3>Certificación</h3>
-      <p>Obtén certificado al finalizar</p>
     </div>
 
   </section>
