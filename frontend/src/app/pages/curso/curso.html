@@ -1,1 +1,43 @@
-<p>curso works!</p>
+<div class="curso">
+
+  <!-- 🔙 VOLVER -->
+  <button class="back" routerLink="/cursos">⬅ Volver</button>
+
+  <!-- 📘 HEADER -->
+  <div class="curso-header">
+
+    <div class="info">
+      <h1>{{ curso?.titulo }}</h1>
+      <p>{{ curso?.descripcion }}</p>
+
+      <div class="meta">
+        ⭐ {{ curso?.rating }}
+        <span *ngIf="curso?.precio === 0">Gratis</span>
+        <span *ngIf="curso?.precio > 0">${{ curso?.precio }}</span>
+      </div>
+
+      <button class="btn-primary" (click)="inscribirse()">
+        Inscribirse
+      </button>
+    </div>
+
+    <div class="emoji">
+      {{ curso?.emoji }}
+    </div>
+
+  </div>
+
+  <!-- 📚 CONTENIDO -->
+  <div class="contenido">
+
+    <h2>Contenido del curso</h2>
+
+    <ul>
+      <li *ngFor="let tema of curso?.temas">
+        ✔ {{ tema }}
+      </li>
+    </ul>
+
+  </div>
+
+</div>
