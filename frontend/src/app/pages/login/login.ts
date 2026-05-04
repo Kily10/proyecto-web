@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -16,28 +15,32 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   login() {
-    this.auth.login({
-      email: this.email,
-      password: this.password
-    }).subscribe((res: any) => {
-      console.log(res);
 
-      if (res.status === 'ok') {
+    // 🔴 VALIDACIÓN BÁSICA
+    if (!this.email || !this.password) {
+      alert('Completa todos los campos');
+      return;
+    }
 
-        // 🔥 GUARDAR USUARIO
-        localStorage.setItem('user', JSON.stringify(res.user));
+    // 🔥 USUARIO SIMULADO
+    if (this.email === 'admin@test.com' && this.password === '1234') {
 
-        alert('Login correcto');
+      const user = {
+        id: 1,
+        email: this.email
+      };
 
-        // 🔥 REDIRECCIÓN AL HISTORIAL
-        this.router.navigate(['/home']);
+      localStorage.setItem('user', JSON.stringify(user));
 
-      } else {
-        alert('Datos incorrectos');
-      }
-    });
+      this.router.navigate(['/home']);
+
+    } else {
+      alert('Credenciales incorrectas');
+    }
+
   }
+
 }
