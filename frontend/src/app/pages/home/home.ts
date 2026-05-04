@@ -57,6 +57,13 @@ export class HomeComponent {
   cursosOriginal = [...this.cursos];
 
   categoriaActual = 'all';
+  ngOnInit() {
+  this.cargarCursos();
+  }
+
+   cargarCursos() {
+   this.cursos = [...this.cursos];
+  }
 
   // 🔍 BUSCAR
   search(event: any) {
