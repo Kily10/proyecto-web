@@ -1,1 +1,31 @@
-<p>cursos works!</p>
+<div class="cursos">
+
+  <h1>📚 Todos los Cursos</h1>
+
+  <div class="grid">
+
+    <div class="card" *ngFor="let curso of cursos">
+
+      <div class="emoji">
+        {{ curso.emoji }}
+      </div>
+
+      <h3>{{ curso.titulo }}</h3>
+
+      <p>{{ curso.descripcion }}</p>
+
+      <div class="info">
+        ⭐ {{ curso.rating }}
+        <span *ngIf="curso.precio === 0">Gratis</span>
+        <span *ngIf="curso.precio > 0">${{ curso.precio }}</span>
+      </div>
+
+      <button (click)="entrarCurso(curso)">
+        Entrar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
