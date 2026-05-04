@@ -52,14 +52,22 @@
 
       <p>{{ curso.descripcion }}</p>
 
+      <!-- 🔥 NIVEL DEL CURSO -->
+      <p class="nivel">Plan requerido: {{ curso.nivel }}</p>
+
       <div class="info">
         ⭐ {{ curso.rating }}
         <span *ngIf="curso.precio === 0">Gratis</span>
         <span *ngIf="curso.precio > 0">${{ curso.precio }}</span>
       </div>
 
-      <button class="btn-primary" (click)="verCurso(curso)">
-        Ver Curso
+      <!-- 🔒 BOTÓN BLOQUEADO -->
+      <button 
+        class="btn-primary" 
+        [disabled]="!puedeAcceder(curso)"
+        (click)="verCurso(curso)"
+      >
+        {{ puedeAcceder(curso) ? 'Ver Curso' : '🔒 Bloqueado' }}
       </button>
 
     </div>

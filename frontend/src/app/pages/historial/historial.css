@@ -30,3 +30,14 @@
 .delete:hover {
   background: #dc2626;
 }
+
+.nivel {
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
