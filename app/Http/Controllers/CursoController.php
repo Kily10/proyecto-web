@@ -10,4 +10,15 @@ class CursoController extends Controller
     {
         return response()->json(Curso::all());
     }
+
+    public function show($id)
+    {
+        $curso = Curso::find($id);
+
+        if (!$curso) {
+            return response()->json(['error' => 'Curso no encontrado'], 404);
+        }
+
+        return response()->json($curso);
+    }
 }
