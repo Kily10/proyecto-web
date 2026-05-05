@@ -1,61 +1,57 @@
 :root {
-  --primary-color: #ffffff;
-  --secondary-color: #102437;
-  --accent: #ffeba7;
+  --primary: #0f172a;        /* Azul oscuro base */
+  --secondary: #1e293b;      /* Azul grisáceo */
+  --accent: #38bdf8;         /* Celeste */
+  --text: #e2e8f0;           /* Texto claro */
+  --white: #ffffff;
 }
 
+/* RESET */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #102437, #1a1a2e);
-  color: var(--primary-color);
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: var(--text);
 }
 
 /* HEADER */
 header {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 1rem 2rem;
-   background: var(--primary-color);
-   color: var(--secondary-color);
-   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.title {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 2rem;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.logo {
-  width: 120px;
+/* LOGO / TITULO */
+.title h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 
+/* Aquí haces lo que te pidieron */
+.title span {
+  color: var(--accent);
+}
+
+/* NAV */
 nav ul {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   list-style: none;
 }
 
 nav a {
   text-decoration: none;
-  color: var(--secondary-color);
-  font-weight: bold;
+  color: var(--text);
+  font-weight: 500;
   transition: 0.3s;
 }
 
-nav a:hover {
-  color: #459092;
-}
-
-.extra {
-  margin-top: 10px;
-  font-size: 0.8em;
-  color: #ccc;
-  cursor: pointer;
-}
-
-.extra:hover {
+  nav a:hover {
   color: var(--accent);
 }
 
@@ -64,38 +60,41 @@ nav a:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 3rem;
+  padding: 4rem;
+  flex-wrap: wrap;
 }
 
 /* IMÁGENES */
 .images img {
   width: 220px;
   margin: 10px;
-  border-radius: 12px;
-  transition: transform 0.3s;
+  border-radius: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 .images img:hover {
-  transform: scale(1.05);
+  transform: scale(1.07);
 }
 
-/* LOGIN BOX PRO */
+/* LOGIN BOX */
 .login-box {
-  background: #2a2b38;
-  color: white;
+  background: rgba(30, 41, 59, 0.8);
   padding: 2rem;
-  border-radius: 12px;
-  width: 260px;
+  border-radius: 14px;
+  width: 280px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
 }
 
 /* INPUTS */
 .field {
-  background: #1f2029;
-  border-radius: 6px;
+  background: #0f172a;
+  border-radius: 8px;
   margin: 12px 0;
   padding: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .field input {
@@ -103,7 +102,7 @@ nav a:hover {
   background: none;
   border: none;
   outline: none;
-  color: white;
+  color: var(--text);
 }
 
 /* BOTÓN */
@@ -111,30 +110,34 @@ nav a:hover {
   width: 100%;
   padding: 10px;
   background: var(--accent);
-  color: #459092;
+  color: #0f172a;
   border: none;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-top: 10px;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
 .login-box button:hover {
-  background: #102437;
-  color: var(--accent);
+  background: #0ea5e9;
+  transform: translateY(-2px);
 }
+
 /* ICONOS */
 .icon {
   color: var(--accent);
   margin-right: 10px;
-
-}
-
+  }
 
 /* TEXTO EXTRA */
 .extra {
   margin-top: 10px;
   font-size: 0.8em;
-  color: #ccc;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.extra:hover {
+    color: var(--accent);
 }
