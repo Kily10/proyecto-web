@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,11 @@ export class LoginComponent {
 
   email: string = '';
   password: string = '';
-  modoRegistro: boolean = false; // 🔥 cambiar entre login / registro
+  modoRegistro: boolean = false;
 
-  constructor(private router: Router) {}
+  private API = 'http://127.0.0.1:8000/api';
+
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
     const user = localStorage.getItem('user');
@@ -25,30 +28,29 @@ export class LoginComponent {
     }
   }
 
-  // 🔥 LOGIN
+  // 🔥 LOGIN REAL
   login() {
 
     if (!this.email || !this.password) {
-      alert('Completa todos los campos');
+      alert('Completa los campos');
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    const existe = users.find(
-      (u: any) => u.email === this.email && u.password === this.password
-    );
-
-    if (!existe) {
-      alert('Cuenta no encontrada ❌');
-      return;
-    }
-
-    localStorage.setItem('user', JSON.stringify(existe));
-    this.router.navigate(['/home']);
+    this.http.post(`${this.API}/login`, {
+      email: this.email,
+      password: this.password
+    }).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('user', JSON.stringify(res));
+        this.router.navigate(['/home']);
+      },
+      error: () => {
+        alert('Credenciales incorrectas ❌');
+      }
+    });
   }
 
-  // 🔥 REGISTRO
+  // 🔥 REGISTRO REAL
   register() {
 
     if (!this.email || !this.password) {
@@ -56,38 +58,21 @@ export class LoginComponent {
       return;
     }
 
-    if (!this.email.includes('@gmail.com')) {
-      alert('Debe ser Gmail');
-      return;
-    }
-
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    const existe = users.find((u: any) => u.email === this.email);
-
-    if (existe) {
-      alert('Esta cuenta ya existe ⚠️');
-      return;
-    }
-
-    const newUser = {
-      id: Date.now(),
+    this.http.post(`${this.API}/register`, {
       email: this.email,
-      password: this.password,
-      plan: 'Gratis',
-      role: this.email === 'admin@gmail.com' ? 'admin' : 'user',
-      loginTime: new Date().toLocaleString()
-    };
-
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    alert('Cuenta creada ✅');
-
-    this.modoRegistro = false;
+      password: this.password
+    }).subscribe({
+      next: () => {
+        alert('Cuenta creada en BD ✅');
+        this.modoRegistro = false;
+      },
+      error: () => {
+        alert('Error al registrar ❌');
+      }
+    });
   }
 
-  // 🔄 cambiar modo
+  // 🔄 CAMBIAR MODO
   toggleModo() {
     this.modoRegistro = !this.modoRegistro;
   }
