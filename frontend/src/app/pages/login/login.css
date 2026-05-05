@@ -28,7 +28,7 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background: rgba(2, 6, 23, 0.9);
+  background: rgba(12, 57, 109, 0.9);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -76,6 +76,22 @@ nav a:hover {
   min-height: 85vh;
   padding: 2rem;
   flex-wrap: wrap;
+
+  /* Animación */
+  animation: fondoAnimado 8s infinite alternate;
+}
+
+/* Definimos los cambios de color */
+@keyframes fondoAnimado {
+  0% {
+    background-color: #13a081;
+  }
+  50% {
+    background-color: #18637a;
+  }
+  100% {
+    background-color: #3aa5c0;
+  }
 }
 
 /* IMÁGENES */
@@ -112,7 +128,7 @@ nav a:hover {
 
 /* INPUTS */
 .field {
-  background: #020617;
+  background: #033a4b;
   border-radius: 10px;
   margin: 15px 0;
   padding: 12px;
