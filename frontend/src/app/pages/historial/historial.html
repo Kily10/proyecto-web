@@ -6,26 +6,12 @@
     📭 Aún no tienes registros
   </div>
 
-  <div class="card" *ngFor="let h of historial; let i = index">
+  <div class="card" *ngFor="let h of historial">
 
-    <!-- 🟡 CURSOS -->
-    <div *ngIf="h.tipo !== 'suscripcion'">
-      <h3>{{ h.curso }}</h3>
-      <p>📅 Fecha: {{ h.fecha }}</p>
-      <p>📈 Progreso: {{ h.progreso }}%</p>
-      <p>🏷️ Plan: {{ h.plan }}</p>
+    <!-- 🔥 MOSTRAR TODO DESDE BD -->
+    <h3>📝 {{ h.accion }}</h3>
 
-      <div class="acciones">
-        <button (click)="irCurso(h.cursoId)">Ver curso</button>
-        <button class="delete" (click)="eliminar(i)">Eliminar</button>
-      </div>
-    </div>
-
-    <!-- 🔵 SUSCRIPCIONES -->
-    <div *ngIf="h.tipo === 'suscripcion'">
-      <h3>💳 Suscripción {{ h.plan }}</h3>
-      <p>📅 Fecha: {{ h.fecha }}</p>
-    </div>
+    <p>📅 {{ h.created_at }}</p>
 
   </div>
 

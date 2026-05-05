@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-historial',
@@ -12,38 +12,18 @@ import { Router } from '@angular/router';
 export class HistorialComponent {
 
   historial: any[] = [];
+  user: any;
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const data = JSON.parse(localStorage.getItem('historial') || '[]');
 
-    // 🔴 validación
-    if (!user.id) {
-      alert('Debes iniciar sesión');
-      this.router.navigate(['/']);
-      return;
-    }
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // 🔥 filtrar por usuario
-    this.historial = data.filter((h: any) => h.userId === user.id);
-  }
-
-  // 🚀 IR AL CURSO
-  irCurso(id: number) {
-    this.router.navigate(['/curso', id]);
-  }
-
-  // 🗑️ OPCIONAL: ELIMINAR CURSO
-  eliminar(index: number) {
-    const data = JSON.parse(localStorage.getItem('historial') || '[]');
-
-    data.splice(index, 1);
-
-    localStorage.setItem('historial', JSON.stringify(data));
-
-    this.historial.splice(index, 1);
+    this.http.get(`http://127.0.0.1:8000/api/historial/${this.user.id}`)
+      .subscribe((data: any) => {
+        this.historial = data;
+      });
   }
 
 }
