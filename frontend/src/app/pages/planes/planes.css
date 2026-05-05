@@ -1,53 +1,114 @@
 .planes {
   padding: 40px;
-  background: #0f172a;
+  background: radial-gradient(circle at top, #1e293b, #020617);
   color: white;
   min-height: 100vh;
   text-align: center;
+  font-family: 'Poppins', sans-serif;
 }
 
 .planes h1 {
-  margin-bottom: 30px;
+  margin-bottom: 35px;
+  font-size: 2.3rem;
+  color: #e2e8f0;
 }
 
 .cards {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   flex-wrap: wrap;
 }
 
 .card {
-  background: #1e293b;
-  padding: 25px;
-  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
   width: 250px;
-  transition: 0.3s;
+  min-height: 230px;
+  padding: 25px;
+  border-radius: 14px;
+  background-color: rgb(8, 19, 170);
+  background-image:
+    radial-gradient(
+      circle at 0% 0%,
+      rgb(37, 7, 44) 15%,
+      rgba(0, 0, 0, 0) 75%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(25, 2, 31, 0.9) 15%,
+      rgba(0, 0, 0, 0) 150%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(24, 8, 28, 0) 0%,
+      rgb(122, 48, 143) 50%,
+      rgba(24, 8, 28, 0) 100%
+    );
+  box-shadow: 0 0 25px rgba(122, 48, 143, 0.35);
+  transition: 0.3s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgb(122, 48, 143);
+  background-image: linear-gradient(
+    0deg,
+    rgba(118, 42, 180, 1) 0%,
+    rgb(199, 95, 228) 75%
+  );
+  border-radius: 9999px;
+  box-shadow:
+    0 1px 5px 3px rgb(199, 95, 228),
+    0 0 30px 5px rgb(199, 95, 228);
 }
 
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(199, 95, 228, 0.55);
 }
 
 .card h2 {
-  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  color: white;
+  font-weight: 700;
 }
 
 .card p {
-  color: #94a3b8;
-  margin-bottom: 15px;
+  position: relative;
+  z-index: 2;
+  color: rgb(220, 180, 232);
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .card button {
-  background: #38bdf8;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  color: #0f172a;
-  font-weight: bold;
+  overflow: hidden;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+  padding: 10px 15px;
+  width: 100%;
+  background-color: rgb(122, 48, 143);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0px 0px 2px 1px rgb(122, 48, 143);
+  transition: all 0.3s ease;
 }
 
 .card button:hover {
-  background: #0ea5e9;
+  background: rgb(122, 48, 143);
+  box-shadow: 0px 0px 20px 0 rgb(199, 95, 228);
 }
