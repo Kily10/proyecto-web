@@ -22,8 +22,18 @@ export class CursosComponent {
       rating: 5,
       emoji: '💻'
     },
+    
     {
       id: 2,
+      titulo: 'Python para todos',
+      descripcion: 'Introducción a Python',
+      precio: 20,
+      rating: 4,
+      emoji: '🐍'
+    },
+
+    {
+      id: 3,
       titulo: 'Data Science',
       descripcion: 'Análisis de datos',
       precio: 25,
@@ -31,10 +41,10 @@ export class CursosComponent {
       emoji: '📊'
     },
     {
-      id: 3,
+      id: 4,
       titulo: 'Diseño UI',
       descripcion: 'Interfaces modernas',
-      precio: 15,
+      precio: 30,
       rating: 4,
       emoji: '🎨'
     }
