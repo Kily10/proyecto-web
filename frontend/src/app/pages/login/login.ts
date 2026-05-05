@@ -41,7 +41,10 @@ export class LoginComponent {
       password: this.password
     }).subscribe({
       next: (res: any) => {
-        localStorage.setItem('user', JSON.stringify(res));
+
+        // 🔥 AQUÍ ESTABA EL ERROR
+        localStorage.setItem('user', JSON.stringify(res.user));
+
         this.router.navigate(['/home']);
       },
       error: () => {
