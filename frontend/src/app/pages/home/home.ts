@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -12,61 +13,27 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   user: any;
 
-  // 📚 CURSOS CON NIVELES
-  cursos = [
-    {
-      id: 1,
-      titulo: 'Angular desde cero',
-      descripcion: 'Aprende Angular paso a paso',
-      precio: 0,
-      rating: 5,
-      categoria: 'programacion',
-      emoji: '💻',
-      nivel: 'Gratis'
-    },
-    {
-      id: 2,
-      titulo: 'Python',
-      descripcion: 'Programación desde cero',
-      precio: 20,
-      rating: 5,
-      categoria: 'programacion',
-      emoji: '🐍',
-      nivel: 'Platino'
-    },
-    {
-      id: 3,
-      titulo: 'Data Science',
-      descripcion: 'Análisis de datos',
-      precio: 25,
-      rating: 4,
-      categoria: 'data',
-      emoji: '📊',
-      nivel: 'Gold'
-    },
-    {
-      id: 4,
-      titulo: 'Diseño UI/UX',
-      descripcion: 'Interfaces modernas',
-      precio: 30,
-      rating: 4,
-      categoria: 'diseno',
-      emoji: '🎨',
-      nivel: 'Diamante'
-    }
-  ];
+  // 🔥 ahora vienen de la BD
+  cursos: any[] = [];
+  cursosOriginal: any[] = [];
 
-  cursosOriginal = [...this.cursos];
   categoriaActual = 'all';
 
   ngOnInit() {
-   this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // 🔥 consumir API Laravel
+    this.http.get('http://127.0.0.1:8000/api/cursos')
+      .subscribe((data: any) => {
+        this.cursos = data;
+        this.cursosOriginal = data;
+      });
   }
-  
+
   // 🔐 CONTROL DE ACCESO
   puedeAcceder(curso: any): boolean {
 
@@ -78,6 +45,7 @@ export class HomeComponent {
       'Gold': 3,
       'Diamante': 4
     };
+    if (!curso.nivel) return true;
 
     return niveles[plan] >= niveles[curso.nivel];
   }
@@ -86,7 +54,7 @@ export class HomeComponent {
   search(event: any) {
     const texto = event.target.value.toLowerCase();
 
-    this.cursos = this.cursosOriginal.filter(curso =>
+    this.cursos = this.cursosOriginal.filter((curso: any) =>
       curso.titulo.toLowerCase().includes(texto)
     );
   }
@@ -99,7 +67,7 @@ export class HomeComponent {
       this.cursos = [...this.cursosOriginal];
     } else {
       this.cursos = this.cursosOriginal.filter(
-        curso => curso.categoria === cat
+        (curso: any) => curso.categoria === cat
       );
     }
   }
