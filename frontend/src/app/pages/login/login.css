@@ -13,13 +13,18 @@ body {
 
 /* HEADER */
 header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 1rem 2rem;
+   background: var(--primary-color);
+   color: var(--secondary-color);
+   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.title {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  background: var(--primary-color);
-  color: var(--secondary-color);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  flex-direction: column;
 }
 
 .logo {
@@ -36,6 +41,22 @@ nav a {
   text-decoration: none;
   color: var(--secondary-color);
   font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #459092;
+}
+
+.extra {
+  margin-top: 10px;
+  font-size: 0.8em;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.extra:hover {
+  color: var(--accent);
 }
 
 /* CONTENEDOR */
