@@ -4,10 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Models\Historial;
+use App\Http\Controllers\CursoController;
 
 // 🔥 AUTENTICACIÓN
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/cursos', [CursoController::class, 'index']);
 
 // 🔥 HISTORIAL POR USUARIO
 Route::get('/historial/{id}', function ($id) {
