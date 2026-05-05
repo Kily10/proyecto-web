@@ -10,6 +10,7 @@ use App\Http\Controllers\CursoController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/cursos', [CursoController::class, 'index']);
+Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
 // 🔥 HISTORIAL POR USUARIO
 Route::get('/historial/{id}', function ($id) {
