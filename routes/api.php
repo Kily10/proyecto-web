@@ -16,6 +16,16 @@ Route::get('/historial/{id}', function ($id) {
     );
 });
 
+// 🔥 GUARDAR ACCIONES (CURSOS / PLANES)
+Route::post('/historial', function (Request $request) {
+    return response()->json(
+        Historial::create([
+            'user_id' => $request->user_id,
+            'accion' => $request->accion
+        ])
+    );
+});
+
 // 🔧 TEST
 Route::get('/test', function () {
     return response()->json(['status' => 'ok']);
