@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-curso',
@@ -12,7 +13,9 @@ import { CommonModule } from '@angular/common';
 export class CursoComponent {
 
   curso: any;
-    user: any;
+  user: any;
+
+  private API = 'http://127.0.0.1:8000/api';
 
   cursos = [
     {
@@ -57,7 +60,7 @@ export class CursoComponent {
     }
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -70,6 +73,21 @@ export class CursoComponent {
     }
   }
 
+  // 🔒 VALIDAR ACCESO SEGÚN PLAN
+  puedeAcceder(): boolean {
+    const plan = this.user.plan || 'Gratis';
+
+    const niveles: any = {
+      'Gratis': 1,
+      'Platino': 2,
+      'Gold': 3,
+      'Diamante': 4
+    };
+
+    return niveles[plan] >= niveles[this.curso.nivel];
+  }
+
+  // 🔥 INSCRIPCIÓN REAL (BD)
   inscribirse() {
 
     if (!this.user.id) {
@@ -77,32 +95,23 @@ export class CursoComponent {
       return;
     }
 
-    const historial = JSON.parse(localStorage.getItem('historial') || '[]');
-
-    // ❌ evitar duplicados
-    const existe = historial.find(
-      (h: any) => h.userId === this.user.id && h.cursoId === this.curso.id
-    );
-
-    if (existe) {
-      alert('Ya estás inscrito ❗');
+    if (!this.puedeAcceder()) {
+      alert('Tu plan no permite este curso 🔒');
       return;
     }
 
-    // ✅ guardar inscripción
-    const nuevo = {
-      userId: this.user.id,
-      cursoId: this.curso.id,
-      curso: this.curso.titulo,
-      fecha: new Date().toLocaleString(),
-      progreso: 0,
-      plan: this.user.plan || 'Gratis'
-    };
+    this.http.post(`${this.API}/historial`, {
+      user_id: this.user.id,
+      accion: 'Se inscribió al curso ' + this.curso.titulo
+    }).subscribe({
+      next: () => {
+        alert('Inscripción guardada en BD ✅');
+      },
+      error: () => {
+        alert('Error al guardar ❌');
+      }
+    });
 
-      historial.push(nuevo);
-    localStorage.setItem('historial', JSON.stringify(historial));
-
-    alert('Inscripción guardada ✅');
   }
 
 }

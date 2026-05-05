@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-planes',
@@ -10,6 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class PlanesComponent {
 
+  private API = 'http://127.0.0.1:8000/api';
+
+  constructor(private http: HttpClient) {}
+
   suscribirse(plan: string) {
 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -19,23 +24,23 @@ export class PlanesComponent {
       return;
     }
 
-    // 🔥 guardar plan actual
+    // 🔥 actualizar plan en sesión
     user.plan = plan;
     localStorage.setItem('user', JSON.stringify(user));
 
-    // 🔥 guardar en historial
-    const historial = JSON.parse(localStorage.getItem('historial') || '[]');
-
-    historial.push({
-      userId: user.id,
-      tipo: 'suscripcion',
-      plan: plan,
-      fecha: new Date().toLocaleString()
+    // 🔥 guardar en BD (historial)
+    this.http.post(`${this.API}/historial`, {
+      user_id: user.id,
+      accion: 'Compró plan ' + plan
+    }).subscribe({
+      next: () => {
+        alert('Suscripción activada: ' + plan + ' ✅');
+      },
+      error: () => {
+        alert('Error al guardar ❌');
+      }
     });
 
-    localStorage.setItem('historial', JSON.stringify(historial));
-
-    alert('Suscripción activada: ' + plan);
   }
 
 }

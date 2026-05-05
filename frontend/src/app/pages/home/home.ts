@@ -64,9 +64,9 @@ export class HomeComponent {
   categoriaActual = 'all';
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+   this.user = JSON.parse(localStorage.getItem('user') || '{}');
   }
-
+  
   // 🔐 CONTROL DE ACCESO
   puedeAcceder(curso: any): boolean {
 
