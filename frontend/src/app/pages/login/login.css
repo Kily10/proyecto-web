@@ -1,4 +1,4 @@
-:root {
+:root { 
   --primary: #020617;
   --secondary: #0f172a;
   --card: #1e293b;
@@ -24,10 +24,15 @@ body {
 
 /* HEADER */
 header {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  grid-template-areas:
+    "logo title nav"
+    ". mensaje .";
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
+  gap: 10px;
+  padding: 1.2rem 2rem 1.5rem;
   background: rgba(12, 57, 109, 0.9);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -35,14 +40,29 @@ header {
 
 /* LOGO */
 .logo {
+  grid-area: logo;
   width: 160px;
+  justify-self: start;
 }
 
 /* TITULO */
+.title {
+  grid-area: title;
+  text-align: center;
+}
+
 .title h1 {
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 700;
   color: white;
+  letter-spacing: 3px;
+}
+
+.title p {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 2px;
 }
 
 .title span {
@@ -50,8 +70,14 @@ header {
 }
 
 /* NAV */
+nav {
+  display: contents;
+}
+
 nav ul {
+  grid-area: nav;
   display: flex;
+  justify-content: flex-end;
   gap: 2rem;
   list-style: none;
 }
@@ -67,6 +93,18 @@ nav a:hover {
   color: var(--accent);
 }
 
+/* MENSAJE MOTIVADOR */
+nav h5 {
+  grid-area: mensaje;
+  max-width: 850px;
+  margin: 10px auto 0;
+  text-align: center;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
 /* CONTENEDOR */
 .container {
   display: flex;
@@ -76,12 +114,10 @@ nav a:hover {
   min-height: 85vh;
   padding: 2rem;
   flex-wrap: wrap;
-
-  /* Animación */
   animation: fondoAnimado 8s infinite alternate;
 }
 
-/* Definimos los cambios de color */
+/* ANIMACIÓN FONDO */
 @keyframes fondoAnimado {
   0% {
     background-color: #13a081;
@@ -128,11 +164,18 @@ nav a:hover {
 
 /* INPUTS */
 .field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: #033a4b;
   border-radius: 10px;
   margin: 15px 0;
   padding: 12px;
   border: 1px solid rgba(255,255,255,0.08);
+}
+
+.icon {
+  color: var(--accent);
 }
 
 .field input {
@@ -142,6 +185,10 @@ nav a:hover {
   outline: none;
   color: var(--text);
   font-size: 0.95rem;
+}
+
+.field input::placeholder {
+  color: var(--muted);
 }
 
 /* BOTÓN */
@@ -184,5 +231,39 @@ nav a:hover {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "logo"
+      "title"
+      "nav"
+      "mensaje";
+    text-align: center;
+  }
+
+  .logo {
+    justify-self: center;
+    width: 120px;
+  }
+
+  nav ul {
+    justify-content: center;
+  }
+
+  .title h1 {
+    font-size: 1.8rem;
+  }
+
+  nav h5 {
+    font-size: 0.8rem;
+  }
+
+  .container {
+    gap: 2rem;
   }
 }
