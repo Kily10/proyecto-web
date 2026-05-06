@@ -22,12 +22,10 @@
 /* BODY */
 body {
     font-family: 'Poppins', sans-serif;
-
     background:
         radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 28%),
         radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.10), transparent 30%),
         linear-gradient(135deg, #07111f 0%, #0b2235 45%, #020617 100%);
-
     color: var(--text);
     overflow-x: hidden;
 }
@@ -36,32 +34,22 @@ body {
 header {
     width: 100%;
     min-height: 110px;
-
     padding: 18px 80px;
-
     display: grid;
-
     grid-template-columns: auto 1fr auto;
-
     grid-template-areas:
         "logo title nav"
         "logo message message";
-
     align-items: center;
-
     column-gap: 22px;
-
     background:
         linear-gradient(
             135deg,
             rgba(2, 6, 23, 0.96),
             rgba(8, 20, 36, 0.96)
         );
-
     border-bottom: 1px solid rgba(56, 189, 248, 0.14);
-
     box-shadow: 0 10px 35px rgba(0,0,0,0.25);
-
     position: relative;
     z-index: 100;
 }
@@ -69,24 +57,17 @@ header {
 /* LOGO */
 .logo {
     grid-area: logo;
-
     width: 106px;
     height: 106px;
-
     object-fit: cover;
-
     border-radius: 14px;
-
     border: 1px solid rgba(56, 189, 248, 0.28);
-
-    box-shadow:
-        0 0 20px rgba(56, 189, 248, 0.18);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.18);
 }
 
 /* TITULO */
 .title {
     grid-area: title;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,13 +76,10 @@ header {
 .title h1 {
     font-size: 2.3rem;
     line-height: 1;
-
-    color: #e2e8f0; 
-
+    color: #e2e8f0;
     font-weight: 900;
     letter-spacing: 1.5px;
-
-    text-shadow:0 0 12px rgba(56,189,248,0.18);
+    text-shadow: 0 0 12px rgba(56,189,248,0.18);
 }
 
 .title h1::first-letter {
@@ -110,16 +88,12 @@ header {
 }
 
 .title p {
-   margin-top: 7px;
-
+    margin-top: 7px;
     font-size: 0.82rem;
-
-    color: #7dd3fc; 
-
+    color: #7dd3fc;
     font-weight: 700;
     letter-spacing: 3px;
-
-    text-shadow:0 0 10px rgba(56,189,248,0.14);
+    text-shadow: 0 0 10px rgba(56,189,248,0.14);
 }
 
 /* NAV */
@@ -129,91 +103,65 @@ nav {
 
 nav ul {
     grid-area: nav;
-
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
     list-style: none;
 }
 
 /* BOTON LOGIN */
 nav a {
     text-decoration: none;
-
     color: #e2e8f0;
-
     font-size: 0.92rem;
     font-weight: 700;
-
     padding: 11px 24px;
-
     border-radius: 12px;
-
     border: 1px solid rgba(56, 189, 248, 0.28);
-
     background:
         linear-gradient(
             135deg,
             rgba(15, 23, 42, 0.95),
             rgba(8, 20, 36, 0.95)
         );
-
     box-shadow:
         0 0 0 rgba(56,189,248,0),
         inset 0 0 12px rgba(56,189,248,0.02);
-
     transition: all 0.3s ease;
 }
 
 nav a:hover {
     color: white;
-
     border-color: rgba(56, 189, 248, 0.55);
-
     background:
         linear-gradient(
             135deg,
             rgba(14, 165, 233, 0.22),
             rgba(2, 132, 199, 0.18)
         );
-
-    box-shadow:
-        0 0 22px rgba(56,189,248,0.18);
-
+    box-shadow: 0 0 22px rgba(56,189,248,0.18);
     transform: translateY(-2px);
 }
 
 /* MENSAJE */
 nav h5 {
     grid-area: message;
-
     margin-top: 10px;
-
     color: #a8b5c7;
-
     font-size: 0.84rem;
     font-weight: 500;
-
     line-height: 1.45;
-
     max-width: 1100px;
 }
 
 /* CONTENEDOR */
 .container {
     min-height: 100vh;
-
     padding: 55px 80px;
-
     display: grid;
-
     grid-template-columns: 1.1fr 0.9fr;
-
     align-items: start;
-
     gap: 60px;
-
     background:
         radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.10), transparent 25%),
         linear-gradient(135deg, #0b2438 0%, #0b1728 48%, #020617 100%);
@@ -222,11 +170,8 @@ nav h5 {
 /* IMAGENES */
 .images {
     display: grid;
-
     grid-template-columns: repeat(2, 220px);
-
     gap: 22px;
-
     justify-content: center;
     align-items: center;
 }
@@ -234,17 +179,12 @@ nav h5 {
 .images img {
     width: 220px;
     height: 170px;
-
     object-fit: cover;
-
     border-radius: 24px;
-
     border: 1px solid rgba(56, 189, 248, 0.18);
-
     box-shadow:
         0 18px 45px rgba(0,0,0,0.45),
         0 0 18px rgba(56, 189, 248, 0.10);
-
     transition: all 0.35s ease;
 }
 
@@ -266,7 +206,6 @@ nav h5 {
 
 .images img:hover {
     transform: scale(1.05);
-
     box-shadow:
         0 22px 55px rgba(0,0,0,0.55),
         0 0 30px rgba(56, 189, 248, 0.24);
@@ -275,27 +214,18 @@ nav h5 {
 /* MAIN IMAGE */
 .main-image {
     display: flex;
-
     justify-content: center;
-
     align-items: flex-start;
-
     padding-top: 10px;
 }
 
 .main-image img {
     width: 520px;
-
     max-width: 100%;
-
     height: auto;
-
     object-fit: contain;
-
     border-radius: 32px;
-
     border: 1px solid rgba(56, 189, 248, 0.14);
-
     box-shadow:
         0 25px 45px rgba(0,0,0,0.35),
         0 0 28px rgba(56,189,248,0.10);
@@ -305,82 +235,53 @@ nav h5 {
 .login-box {
     width: 100%;
     max-width: 430px;
-
     margin: 0 auto;
-
     padding: 20px;
-
     text-align: center;
 }
 
 /* TITULO LOGIN */
 .login-box h2 {
     margin-bottom: 34px;
-
     font-size: 2.4rem;
-
     line-height: 1.15;
-
-    color: var(--text);
-
+    color: #e2e8f0;
     font-weight: 900;
-
     letter-spacing: -1px;
 }
 
 /* INPUTS */
 .field {
     position: relative;
-
     width: 100%;
-    height: 68px;
-
-    margin-bottom: 22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(10, 20, 38, 0.98),
-            rgba(5, 15, 30, 0.98)
-        );
-
-    border: 1.5px solid rgba(56, 189, 248, 0.24);
-
-    border-radius: 14px;
-
-    backdrop-filter: blur(10px);
-
+    height: 54px;
+    margin-bottom: 14px;
+    background: #0f172a;
+    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    border-radius: 7px;
     transition: all 0.3s ease;
-
     box-shadow:
-        0 10px 24px rgba(0,0,0,0.28),
-        0 0 0 rgba(56,189,248,0);
+        0 8px 22px rgba(0,0,0,0.22),
+        inset 0 0 12px rgba(56,189,248,0.02);
 }
 
 .field:focus-within {
     border-color: rgba(56, 189, 248, 0.85);
-
     box-shadow:
-        0 0 28px rgba(56,189,248,0.18),
-        0 0 0 5px rgba(56,189,248,0.08);
-
-    transform: translateY(-2px);
+        0 0 20px rgba(56,189,248,0.16),
+        0 0 0 3px rgba(56,189,248,0.08);
+    transform: translateY(-1px);
 }
 
 .field input {
     width: 100%;
     height: 100%;
-
-    padding: 24px 18px 8px 18px;
-
+    padding: 20px 14px 7px 14px;
     border: none;
     outline: none;
-
     background: transparent;
-
-    color: #f8fafc;
-
-    font-size: 1rem;
+    color: #e2e8f0;
+    font-size: 0.95rem;
     font-weight: 600;
 }
 
@@ -388,68 +289,60 @@ nav h5 {
     color: transparent;
 }
 
+/* Evita que Chrome ponga el input blanco al autocompletar */
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus,
+.field input:-webkit-autofill:active {
+    -webkit-text-fill-color: #e2e8f0 !important;
+    caret-color: #e2e8f0;
+    transition: background-color 9999s ease-in-out 0s;
+    box-shadow: 0 0 0 1000px #0f172a inset !important;
+}
+
 /* LABEL */
 .field label {
     position: absolute;
-
-    left: 18px;
+    left: 14px;
     top: 50%;
-
     transform: translateY(-50%);
-
     color: #94a3b8;
-
-    font-size: 0.95rem;
-    font-weight: 600;
-
+    font-size: 0.82rem;
+    font-weight: 700;
     pointer-events: none;
-
     transition: all 0.25s ease;
-
-    background: #081221;
-
-    padding: 0 7px;
+    background: #0f172a;
+    padding: 0 6px;
 }
 
 .field input:focus + label,
 .field input:not(:placeholder-shown) + label {
     top: 0;
-
-    transform: translateY(0);
-
-    font-size: 0.74rem;
-
-    color: var(--accent-hover);
+    transform: translateY(-50%);
+    font-size: 0.68rem;
+    color: #7dd3fc;
 }
 
 /* BOTONES */
 .login-box button {
     width: 100%;
-    height: 60px;
-
-    margin-top: 12px;
-
+    height: 55px;
+    margin-top: 14px;
     border: none;
-    border-radius: 14px;
-
+    border-radius: 9px;
     background:
         linear-gradient(
             135deg,
             #38bdf8,
             #0ea5e9
         );
-
     color: white;
-
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 800;
-
     cursor: pointer;
-
     box-shadow:
-        0 14px 30px rgba(56, 189, 248, 0.26),
-        0 0 24px rgba(14, 165, 233, 0.18);
-
+        0 14px 30px rgba(56, 189, 248, 0.28),
+        0 0 25px rgba(14, 165, 233, 0.18);
     transition: all 0.3s ease;
 }
 
@@ -460,9 +353,7 @@ nav h5 {
             #67e8f9,
             #38bdf8
         );
-
     transform: translateY(-3px);
-
     box-shadow:
         0 20px 40px rgba(56,189,248,0.34),
         0 0 35px rgba(56,189,248,0.22);
@@ -470,71 +361,53 @@ nav h5 {
 
 /* SOCIAL LOGIN */
 .social-login {
-    margin-top: 28px;
+    margin-top: 24px;
 }
 
 .divider {
     display: flex;
     align-items: center;
-
     gap: 12px;
-
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .divider span {
     flex: 1;
-
     height: 1px;
-
     background: rgba(148, 163, 184, 0.25);
 }
 
 .divider p {
-    color: var(--muted);
-
-    font-size: 0.85rem;
-
+    color: #94a3b8;
+    font-size: 0.75rem;
     white-space: nowrap;
 }
 
 /* BOTONES SOCIALES */
 .social-buttons {
     display: flex;
-
     justify-content: center;
-
     gap: 18px;
 }
 
 .login-box .social-btn {
-    width: 54px;
-    height: 54px;
-
+    width: 44px;
+    height: 44px;
     margin: 0;
     padding: 0;
-
-    border-radius: 14px;
-
-    background: rgba(7, 17, 31, 0.95);
-
+    border-radius: 10px;
+    background: #0f172a;
     border: 1.5px solid rgba(56, 189, 248, 0.45);
-
-    color: var(--text);
-
-    font-size: 1.45rem;
+    color: #e2e8f0;
+    font-size: 1.1rem;
     font-weight: 800;
-
     box-shadow: 0 8px 18px rgba(0,0,0,0.22);
-
     transition: all 0.3s ease;
 }
 
 .login-box .social-btn:hover {
     background: rgba(14, 165, 233, 0.16);
-
     transform: translateY(-4px);
-
     box-shadow:
         0 14px 28px rgba(56, 189, 248, 0.24),
         0 0 20px rgba(56, 189, 248, 0.18);
@@ -543,33 +416,21 @@ nav h5 {
 /* EXTRA */
 .extra {
     margin-top: 30px;
-
-    padding: 20px;
-
-    background: rgba(7, 17, 31, 0.92);
-
-    border: 1px solid rgba(56, 189, 248, 0.18);
-
-    border-radius: 12px;
-
-    color: var(--text);
-
-    font-size: 0.95rem;
-
+    padding: 18px;
+    background: #07111f;
+    border: 1px solid rgba(56, 189, 248, 0.22);
+    border-radius: 9px;
+    color: #94a3b8;
+    font-size: 0.85rem;
     cursor: pointer;
-
     transition: all 0.3s ease;
-
     box-shadow: 0 8px 18px rgba(0,0,0,0.22);
 }
 
 .extra:hover {
-    color: var(--accent-hover);
-
-    border-color: rgba(56, 189, 248, 0.28);
-
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.38);
     background: rgba(10, 28, 45, 0.96);
-
     transform: translateY(-2px);
 }
 
@@ -578,14 +439,11 @@ nav h5 {
 
     header {
         padding: 16px 25px;
-
         grid-template-columns: auto 1fr;
-
         grid-template-areas:
             "logo title"
             "message message"
             "nav nav";
-
         row-gap: 10px;
     }
 
@@ -600,7 +458,6 @@ nav h5 {
 
     .container {
         grid-template-columns: 1fr;
-
         padding: 45px 25px 35px;
     }
 
@@ -658,6 +515,6 @@ nav h5 {
     }
 
     .divider p {
-        font-size: 0.75rem;
+        font-size: 0.68rem;
     }
 }
