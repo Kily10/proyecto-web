@@ -112,14 +112,20 @@ Route::get('/reporte/usuarios', function () {
 //SIMULAR PAGO
 Route::post('/pago', function (Request $request) {
 
-    $monto = match($request->plan) {
+    if (!$request->user_id || !$request->plan) {
+        return response()->json(['error' => 'Datos incompletos'], 400);
+    }
+
+    //precios
+    $precios = [
         'Platino' => 20,
         'Gold' => 30,
-        'Diamante' => 50,
-        default => 0
-    };
+        'Diamante' => 50
+    ];
 
-    // guardar pago
+    $monto = $precios[$request->plan] ?? 0;
+
+    //guardar pago
     $pago = Pago::create([
         'user_id' => $request->user_id,
         'plan' => $request->plan,
@@ -127,8 +133,8 @@ Route::post('/pago', function (Request $request) {
         'estado' => 'aprobado'
     ]);
 
-    // activar suscripción
-    $sus = Suscripcion::create([
+    //crear suscripción
+    $suscripcion = Suscripcion::create([
         'user_id' => $request->user_id,
         'plan' => $request->plan,
         'inicio' => now(),
@@ -137,6 +143,6 @@ Route::post('/pago', function (Request $request) {
 
     return response()->json([
         'pago' => $pago,
-        'suscripcion' => $sus
+        'suscripcion' => $suscripcion
     ]);
 });
