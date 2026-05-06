@@ -15,8 +15,8 @@ return new class extends Migration
               $table->id();
               $table->unsignedBigInteger('user_id');
               $table->string('plan');
-              $table->timestamp('inicio'); // CAMBIO
-              $table->timestamp('fin');    // CAMBIO
+              $table->dateTime('inicio');
+              $table->dateTime('fin');
               $table->timestamps();
         });
     }

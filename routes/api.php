@@ -7,6 +7,8 @@ use App\Http\Controllers\CursoController;
 use App\Models\Historial;
 use App\Models\Suscripcion;
 use App\Models\Pago;
+use App\Models\User;
+
 
 // 🔐 AUTENTICACIÓN
 Route::post('/register', [AuthController::class, 'register']);
@@ -43,7 +45,7 @@ Route::post('/historial', function (Request $request) {
 });
 
 
-// 💳 PAGO + SUSCRIPCIÓN (REAL)
+// 💳 PAGO + SUSCRIPCIÓN (CORREGIDO)
 Route::post('/pago', function (Request $request) {
 
     try {
@@ -52,34 +54,43 @@ Route::post('/pago', function (Request $request) {
             return response()->json(['error' => 'Datos incompletos'], 400);
         }
 
+        // 💰 precios reales por plan
         $precios = [
+            'Gratis' => 0,
             'Platino' => 20,
             'Gold' => 30,
             'Diamante' => 50
         ];
 
-        $monto = $precios[$request->plan] ?? 0;
+        if (!array_key_exists($request->plan, $precios)) {
+            return response()->json(['error' => 'Plan inválido'], 400);
+        }
+
+        $monto = $precios[$request->plan];
 
         // 💰 guardar pago
         $pago = Pago::create([
             'user_id' => $request->user_id,
             'plan' => $request->plan,
             'monto' => $monto,
-            'estado' => 'aprobado'
+            'estado' => 'completado'
         ]);
 
         // 📦 crear suscripción
+        $inicio = now();
+        $fin = now()->addMonth();
+
         $suscripcion = Suscripcion::create([
             'user_id' => $request->user_id,
             'plan' => $request->plan,
-            'inicio' => now(),
-            'fin' => now()->addMonth()
+            'inicio' => $inicio,
+            'fin' => $fin
         ]);
 
         return response()->json([
             'pago' => $pago,
             'suscripcion' => $suscripcion
-        ]);
+        ], 201);
 
     } catch (\Exception $e) {
 
@@ -97,7 +108,7 @@ Route::get('/suscripcion/{id}', function ($id) {
     try {
 
         $suscripcion = Suscripcion::where('user_id', $id)
-            ->orderBy('id', 'desc')
+            ->latest()
             ->first();
 
         return response()->json($suscripcion);
@@ -113,10 +124,10 @@ Route::get('/suscripcion/{id}', function ($id) {
 
 // 📈 REPORTES
 
-// 1️⃣ INGRESOS POR PLAN
+// 1️⃣ INGRESOS POR PLAN (REAL)
 Route::get('/reporte/ingresos', function () {
 
-    return Suscripcion::selectRaw('plan, COUNT(*) as total, COUNT(*) * 20 as ingresos')
+    return Pago::selectRaw('plan, COUNT(*) as total, SUM(monto) as ingresos')
         ->groupBy('plan')
         ->get();
 });
@@ -137,8 +148,11 @@ Route::get('/reporte/cursos', function () {
 // 3️⃣ USUARIOS ACTIVOS
 Route::get('/reporte/usuarios', function () {
 
-    return \App\Models\User::selectRaw('COUNT(*) as total_usuarios')
-        ->get();
+    return response()->json([
+        'total_usuarios' => User::count(),
+        'activos' => Suscripcion::where('fin', '>=', now())->count(),
+        'inactivos' => User::count() - Suscripcion::where('fin', '>=', now())->count()
+    ]);
 });
 
 
