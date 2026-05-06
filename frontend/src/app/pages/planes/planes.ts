@@ -23,7 +23,7 @@ export class PlanesComponent {
   // 💳 PAGO + SUSCRIPCIÓN REAL
   suscribirse(plan: string) {
 
-    if (!this.user.id) {
+    if (!this.user || !this.user.id) {
       alert('Debes iniciar sesión');
       return;
     }
@@ -34,6 +34,14 @@ export class PlanesComponent {
     }).subscribe({
       next: (res: any) => {
 
+        console.log('RESPUESTA BACKEND:', res); // 🔥 DEBUG
+
+        // 🔴 validar respuesta
+        if (!res || !res.suscripcion) {
+          alert('Error en respuesta del servidor ❌');
+          return;
+        }
+
         // 🔥 actualizar plan en frontend
         this.user.plan = res.suscripcion.plan;
         localStorage.setItem('user', JSON.stringify(this.user));
@@ -42,11 +50,16 @@ export class PlanesComponent {
         this.http.post(`${this.API}/historial`, {
           user_id: this.user.id,
           accion: 'Pagó y activó plan ' + plan
-        }).subscribe();
+        }).subscribe({
+          next: () => console.log('Historial guardado ✅'),
+          error: (err) => console.log('Error historial ❌', err)
+        });
 
         alert('Pago realizado 💳✅ Plan: ' + plan);
       },
-      error: () => {
+
+      error: (err) => {
+        console.log('ERROR BACKEND ❌:', err); // 🔥 MUY IMPORTANTE
         alert('Error en el pago ❌');
       }
     });
