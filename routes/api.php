@@ -94,9 +94,10 @@ Route::post('/pago', function (Request $request) {
 
     } catch (\Exception $e) {
 
-        return response()->json([
-            'error' => $e->getMessage(),
-            'line' => $e->getLine()
+       return response()->json([
+           'error' => $e->getMessage(),
+           'line' => $e->getLine(),
+           'trace' => $e->getTrace()
         ], 500);
     }
 });
