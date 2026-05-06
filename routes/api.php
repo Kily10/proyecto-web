@@ -8,16 +8,17 @@ use App\Models\Historial;
 use App\Models\Suscripcion;
 use App\Models\Pago;
 
-
-//AUTENTICACIÓN
+// 🔐 AUTENTICACIÓN
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// CURSOS
+
+// 📚 CURSOS
 Route::get('/cursos', [CursoController::class, 'index']);
 Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
-// HISTORIAL
+
+// 📊 HISTORIAL
 Route::get('/historial/{id}', function ($id) {
     return response()->json(
         Historial::where('user_id', $id)
@@ -26,69 +27,105 @@ Route::get('/historial/{id}', function ($id) {
     );
 });
 
-// HISTORIAL
 Route::post('/historial', function (Request $request) {
 
     if (!$request->user_id || !$request->accion) {
         return response()->json(['error' => 'Datos incompletos'], 400);
     }
 
-    $historial = Historial::create([
-        'user_id' => $request->user_id,
-        'accion' => $request->accion
-    ]);
-
-    return response()->json($historial, 201);
+    return response()->json(
+        Historial::create([
+            'user_id' => $request->user_id,
+            'accion' => $request->accion
+        ]),
+        201
+    );
 });
 
-// SUSCRIPCIONES 
-Route::post('/suscripcion', function (Request $request) {
 
-    if (!$request->user_id || !$request->plan) {
-        return response()->json(['error' => 'Datos incompletos'], 400);
+// 💳 PAGO + SUSCRIPCIÓN (REAL)
+Route::post('/pago', function (Request $request) {
+
+    try {
+
+        if (!$request->user_id || !$request->plan) {
+            return response()->json(['error' => 'Datos incompletos'], 400);
+        }
+
+        $precios = [
+            'Platino' => 20,
+            'Gold' => 30,
+            'Diamante' => 50
+        ];
+
+        $monto = $precios[$request->plan] ?? 0;
+
+        // 💰 guardar pago
+        $pago = Pago::create([
+            'user_id' => $request->user_id,
+            'plan' => $request->plan,
+            'monto' => $monto,
+            'estado' => 'aprobado'
+        ]);
+
+        // 📦 crear suscripción
+        $suscripcion = Suscripcion::create([
+            'user_id' => $request->user_id,
+            'plan' => $request->plan,
+            'inicio' => now(),
+            'fin' => now()->addMonth()
+        ]);
+
+        return response()->json([
+            'pago' => $pago,
+            'suscripcion' => $suscripcion
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage(),
+            'line' => $e->getLine()
+        ], 500);
     }
-
-    $inicio = now();
-    $fin = now()->addMonth();
-
-    $sus = Suscripcion::create([
-        'user_id' => $request->user_id,
-        'plan' => $request->plan,
-        'inicio' => $inicio,
-        'fin' => $fin
-    ]);
-
-    return response()->json($sus, 201);
 });
 
-//SUSCRIPCIONES 
+
+// 📦 OBTENER SUSCRIPCIÓN
 Route::get('/suscripcion/{id}', function ($id) {
 
-    $sus = Suscripcion::where('user_id', $id)
-        ->orderBy('created_at', 'desc')
-        ->first();
+    try {
 
-    return response()->json($sus);
+        $suscripcion = Suscripcion::where('user_id', $id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        return response()->json($suscripcion);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 500);
+    }
 });
 
-//TEST
-Route::get('/test', function () {
-    return response()->json(['status' => 'ok']);
-});
 
-//REPORTE 1: INGRESOS POR PLAN
+// 📈 REPORTES
+
+// 1️⃣ INGRESOS POR PLAN
 Route::get('/reporte/ingresos', function () {
 
-    return \App\Models\Suscripcion::selectRaw('plan, COUNT(*) as total, COUNT(*) * 20 as ingresos')
+    return Suscripcion::selectRaw('plan, COUNT(*) as total, COUNT(*) * 20 as ingresos')
         ->groupBy('plan')
         ->get();
 });
 
 
-//REPORTE 2: CURSOS MÁS INSCRITOS
+// 2️⃣ CURSOS MÁS INSCRITOS
 Route::get('/reporte/cursos', function () {
 
-    return \App\Models\Historial::selectRaw('accion, COUNT(*) as total')
+    return Historial::selectRaw('accion, COUNT(*) as total')
         ->where('accion', 'like', 'Se inscribió al curso%')
         ->groupBy('accion')
         ->orderByDesc('total')
@@ -97,20 +134,15 @@ Route::get('/reporte/cursos', function () {
 });
 
 
-//REPORTE 3: USUARIOS ACTIVOS
-Route::post('/pago', function (Request $request) {
+// 3️⃣ USUARIOS ACTIVOS
+Route::get('/reporte/usuarios', function () {
 
-    try {
+    return \App\Models\User::selectRaw('COUNT(*) as total_usuarios')
+        ->get();
+});
 
-        return response()->json([
-            'mensaje' => 'ENTRO AL ENDPOINT',
-            'datos' => $request->all()
-        ]);
 
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'line' => $e->getLine()
-        ], 500);
-    }
+// 🔧 TEST
+Route::get('/test', function () {
+    return response()->json(['status' => 'ok']);
 });
