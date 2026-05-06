@@ -13,7 +13,10 @@ export class ReportesComponent {
 
   ingresos: any[] = [];
   cursos: any[] = [];
-  usuarios: any;
+  usuarios: any = {
+    activos: 0,
+    inactivos: 0
+  };
 
   private API = 'http://127.0.0.1:8000/api';
 
@@ -21,17 +24,34 @@ export class ReportesComponent {
 
   ngOnInit() {
 
-    // 🔥 INGRESOS
+    // 💰 INGRESOS
     this.http.get(`${this.API}/reporte/ingresos`)
-      .subscribe((data: any) => this.ingresos = data);
+      .subscribe({
+        next: (data: any) => {
+          console.log('💰 INGRESOS:', data);
+          this.ingresos = data || [];
+        },
+        error: (err) => console.error('❌ Error ingresos:', err)
+      });
 
-    // 🔥 CURSOS TOP
+    // 🔥 CURSOS
     this.http.get(`${this.API}/reporte/cursos`)
-      .subscribe((data: any) => this.cursos = data);
+      .subscribe({
+        next: (data: any) => {
+          console.log('🔥 CURSOS:', data);
+          this.cursos = data || [];
+        },
+        error: (err) => console.error('❌ Error cursos:', err)
+      });
 
-    // 🔥 USUARIOS
+    // 👥 USUARIOS
     this.http.get(`${this.API}/reporte/usuarios`)
-      .subscribe((data: any) => this.usuarios = data);
+      .subscribe({
+        next: (data: any) => {
+          console.log('👥 USUARIOS:', data);
+          this.usuarios = data || { activos: 0, inactivos: 0 };
+        },
+        error: (err) => console.error('❌ Error usuarios:', err)
+      });
   }
-
 }

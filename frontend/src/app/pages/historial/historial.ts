@@ -18,13 +18,23 @@ export class HistorialComponent {
 
   constructor(private http: HttpClient) {}
 
-    ngOnInit() {
-      this.user = JSON.parse(localStorage.getItem('user') || '{}');
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
 
-      this.http.get(`${this.API}/historial/${this.user.id}`)
-       .subscribe((data: any) => {
-         this.historial = data;
-       });
+    if (!this.user?.id) {
+      console.warn('⚠ No hay usuario en sesión');
+      return;
+    }
+
+    this.http.get(`${this.API}/historial/${this.user.id}`)
+      .subscribe({
+        next: (data: any) => {
+          console.log('📊 HISTORIAL:', data);
+          this.historial = data || [];
+        },
+        error: (err) => {
+          console.error('❌ Error historial:', err);
+        }
+      });
   }
-
 }

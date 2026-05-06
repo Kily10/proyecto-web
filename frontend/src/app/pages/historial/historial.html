@@ -9,7 +9,9 @@
   <div class="card" *ngFor="let h of historial">
 
     <p>📝 {{ h.accion }}</p>
-    <p>📅 {{ h.created_at }}</p>
+
+    <!-- 🔥 fecha formateada -->
+    <p>📅 {{ h.created_at | date:'medium' }}</p>
 
   </div>
 
