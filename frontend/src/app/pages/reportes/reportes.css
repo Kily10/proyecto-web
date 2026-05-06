@@ -1,0 +1,62 @@
+/* CONTENEDOR */
+.reportes {
+  padding: 2rem;
+  background: linear-gradient(135deg, #102437, #1a1a2e);
+  min-height: 100vh;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* TITULOS */
+.reportes h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.reportes h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #ffeba7;
+}
+
+/* CARDS */
+.card {
+  background: #2a2b38;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* TEXTO */
+.card p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* GRID (opcional para mejor diseño) */
+.reportes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .reportes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .reportes h1 {
+    grid-column: span 2;
+  }
+
+  .reportes h2 {
+    grid-column: span 2;
+  }
+}

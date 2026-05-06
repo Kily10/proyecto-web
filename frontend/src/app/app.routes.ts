@@ -6,10 +6,12 @@ import { HistorialComponent } from './pages/historial/historial';
 import { CursoComponent } from './pages/curso/curso';
 import { authGuard } from './auth.guard';
 import { PlanesComponent } from './pages/planes/planes';
+import { ReportesComponent } from './pages/reportes/reportes';
 
 export const routes = [
 
   { path: '', component: LoginComponent },
+  { path: 'reportes', component: ReportesComponent }
   { path: 'planes', component: PlanesComponent, canActivate: [authGuard] },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'cursos', component: CursosComponent, canActivate: [authGuard] },

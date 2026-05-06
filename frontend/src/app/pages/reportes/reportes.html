@@ -1,0 +1,27 @@
+<div class="reportes">
+
+  <h1>📊 Reportes</h1>
+
+  <!-- 💰 INGRESOS -->
+  <h2>💰 Ingresos por plan</h2>
+  <div *ngFor="let i of ingresos" class="card">
+    <p>Plan: {{ i.plan }}</p>
+    <p>Usuarios: {{ i.total }}</p>
+    <p>Ingresos: ${{ i.ingresos }}</p>
+  </div>
+
+  <!-- 📚 CURSOS TOP -->
+  <h2>🔥 Cursos más inscritos</h2>
+  <div *ngFor="let c of cursos" class="card">
+    <p>{{ c.accion }}</p>
+    <p>Total: {{ c.total }}</p>
+  </div>
+
+  <!-- 👥 USUARIOS -->
+  <h2>👥 Usuarios</h2>
+  <div class="card">
+    <p>Activos: {{ usuarios?.activos }}</p>
+    <p>Inactivos: {{ usuarios?.inactivos }}</p>
+  </div>
+
+</div>
