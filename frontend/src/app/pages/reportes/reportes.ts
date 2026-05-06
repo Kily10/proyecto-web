@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,14 +9,11 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './reportes.html',
   styleUrls: ['./reportes.css']
 })
-export class ReportesComponent {
+export class ReportesComponent implements OnInit {
 
   ingresos: any[] = [];
   cursos: any[] = [];
-  usuarios: any = {
-    activos: 0,
-    inactivos: 0
-  };
+  usuarios: any = { activos: 0, inactivos: 0 };
 
   private API = 'http://127.0.0.1:8000/api';
 
@@ -28,44 +25,33 @@ export class ReportesComponent {
 
   cargarReportes() {
 
-    // 💰 INGRESOS
     this.http.get(`${this.API}/reporte/ingresos`)
       .subscribe({
-        next: (res: any) => {
-          console.log('💰 INGRESOS:', res);
-          this.ingresos = Array.isArray(res) ? res : [];
+        next: (data: any) => {
+          console.log('💰 INGRESOS:', data);
+          this.ingresos = data;
         },
-        error: (err) => {
-          console.error('❌ Error ingresos:', err);
-          this.ingresos = [];
-        }
+        error: err => console.error(err)
       });
 
-    // 🔥 CURSOS
     this.http.get(`${this.API}/reporte/cursos`)
       .subscribe({
-        next: (res: any) => {
-          console.log('🔥 CURSOS:', res);
-          this.cursos = Array.isArray(res) ? res : [];
+        next: (data: any) => {
+          console.log('🔥 CURSOS:', data);
+          this.cursos = data;
         },
-        error: (err) => {
-          console.error('❌ Error cursos:', err);
-          this.cursos = [];
-        }
+        error: err => console.error(err)
       });
 
-    // 👥 USUARIOS
     this.http.get(`${this.API}/reporte/usuarios`)
       .subscribe({
-        next: (res: any) => {
-          console.log('👥 USUARIOS:', res);
-          this.usuarios = res || { activos: 0, inactivos: 0 };
+        next: (data: any) => {
+          console.log('👥 USUARIOS:', data);
+          this.usuarios = data;
         },
-        error: (err) => {
-          console.error('❌ Error usuarios:', err);
-          this.usuarios = { activos: 0, inactivos: 0 };
-        }
+        error: err => console.error(err)
       });
 
   }
+
 }

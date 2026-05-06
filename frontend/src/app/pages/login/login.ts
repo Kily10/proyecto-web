@@ -22,13 +22,21 @@ export class LoginComponent {
   constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
-    const user = localStorage.getItem('user');
-    if (user) {
-      this.router.navigate(['/home']);
+    const stored = localStorage.getItem('user');
+
+    if (stored) {
+      try {
+        const user = JSON.parse(stored);
+        if (user && user.id) {
+          this.router.navigate(['/home']);
+        }
+      } catch (e) {
+        localStorage.removeItem('user');
+      }
     }
   }
 
-  // 🔥 LOGIN REAL
+  // 🔥 LOGIN CORREGIDO Y BLINDADO
   login() {
 
     if (!this.email || !this.password) {
@@ -42,18 +50,29 @@ export class LoginComponent {
     }).subscribe({
       next: (res: any) => {
 
-        // 🔥 AQUÍ ESTABA EL ERROR
-        localStorage.setItem('user', JSON.stringify(res.user));
+        console.log('🔐 RESPUESTA LOGIN:', res);
+
+        // 🔥 soporta ambos formatos: {user: {...}} o directo {...}
+        const user = res.user ? res.user : res;
+
+        if (!user || !user.id) {
+          alert('Error: usuario inválido ❌');
+          return;
+        }
+
+        // 🔥 guardar limpio
+        localStorage.setItem('user', JSON.stringify(user));
 
         this.router.navigate(['/home']);
       },
-      error: () => {
+      error: (err) => {
+        console.error('❌ ERROR LOGIN:', err);
         alert('Credenciales incorrectas ❌');
       }
     });
   }
 
-  // 🔥 REGISTRO REAL
+  // 🔥 REGISTRO
   register() {
 
     if (!this.email || !this.password) {
@@ -69,13 +88,13 @@ export class LoginComponent {
         alert('Cuenta creada en BD ✅');
         this.modoRegistro = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error('❌ ERROR REGISTER:', err);
         alert('Error al registrar ❌');
       }
     });
   }
 
-  // 🔄 CAMBIAR MODO
   toggleModo() {
     this.modoRegistro = !this.modoRegistro;
   }
