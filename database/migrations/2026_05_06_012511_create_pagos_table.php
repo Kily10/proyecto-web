@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('plan');
+            $table->decimal('monto', 8, 2);
+            $table->string('estado'); // aprobado / pendiente
             $table->timestamps();
         });
     }
