@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CursoController;
 use App\Models\Historial;
 use App\Models\Suscripcion;
+use App\Models\Pago;
+
 
 //AUTENTICACIÓN
 Route::post('/register', [AuthController::class, 'register']);
@@ -104,5 +106,37 @@ Route::get('/reporte/usuarios', function () {
     return response()->json([
         'activos' => $activos,
         'inactivos' => $total - $activos
+    ]);
+});
+
+//SIMULAR PAGO
+Route::post('/pago', function (Request $request) {
+
+    $monto = match($request->plan) {
+        'Platino' => 20,
+        'Gold' => 30,
+        'Diamante' => 50,
+        default => 0
+    };
+
+    // guardar pago
+    $pago = Pago::create([
+        'user_id' => $request->user_id,
+        'plan' => $request->plan,
+        'monto' => $monto,
+        'estado' => 'aprobado'
+    ]);
+
+    // activar suscripción
+    $sus = Suscripcion::create([
+        'user_id' => $request->user_id,
+        'plan' => $request->plan,
+        'inicio' => now(),
+        'fin' => now()->addMonth()
+    ]);
+
+    return response()->json([
+        'pago' => $pago,
+        'suscripcion' => $sus
     ]);
 });
