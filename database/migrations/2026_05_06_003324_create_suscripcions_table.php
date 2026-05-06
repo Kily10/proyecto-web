@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('suscripcions', function (Blueprint $table) {
-             $table->id();
-             $table->unsignedBigInteger('user_id');
-             $table->string('plan'); // Gratis, Platino, Gold, Diamante
-             $table->date('inicio');
-             $table->date('fin');
-             $table->timestamps();
+              $table->id();
+              $table->unsignedBigInteger('user_id');
+              $table->string('plan');
+              $table->timestamp('inicio'); // CAMBIO
+              $table->timestamp('fin');    // CAMBIO
+              $table->timestamps();
         });
     }
 
