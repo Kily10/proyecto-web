@@ -1,8 +1,13 @@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <div class="home">
 
-  <!-- 🔝 NAVBAR -->
   <header class="navbar">
-    <div class="logo">EduFlow</div>
+    <div class="logo">
+      <span class="logo-icon">✦</span> EduFlow
+    </div>
 
     <nav class="menu">
       <a routerLink="/home">Inicio</a>
@@ -19,61 +24,167 @@
     </div>
   </header>
 
-  <!-- 🚀 HERO -->
   <section class="hero">
-    <h1>Aprende nuevas habilidades 🚀</h1>
-    <p>Explora cursos de programación, diseño y tecnología</p>
+    <div class="hero-content">
+      <div class="hero-badge">🔥 Plataforma de aprendizaje online</div>
 
-    <div class="search">
-      <input 
-        type="text" 
-        placeholder="Buscar cursos..."
-        (input)="search($event)"
-      >
+      <h1>
+        Aprende nuevas habilidades
+        <span class="hero-accent">sin límites</span> 🚀
+      </h1>
+
+      <p>
+        Explora cursos de programación, diseño y tecnología creados para mejorar tus habilidades paso a paso.
+      </p>
+
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          placeholder="¿Qué quieres aprender hoy?"
+          (input)="search($event)"
+        >
+      </div>
+
+      <div class="hero-tags">
+        <span>Python</span>
+        <span>JavaScript</span>
+        <span>Angular</span>
+        <span>UI/UX</span>
+        <span>Data Science</span>
+      </div>
+    </div>
+
+    <div class="hero-illustration">
+      <div class="floating-card card-1">⚡ Cursos prácticos</div>
+      <div class="floating-card card-2">🏆 Certificados</div>
+      <div class="floating-card card-3">🌍 Aprende online</div>
+
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
     </div>
   </section>
 
-  <!-- 📚 CATEGORÍAS -->
-  <section class="categories">
-    <button (click)="filter('all')" class="active">Todos</button>
-    <button (click)="filter('programacion')">Programación</button>
-    <button (click)="filter('data')">Data Science</button>
-    <button (click)="filter('diseno')">Diseño</button>
+  <section class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">120+</span>
+      <span class="stat-label">Cursos disponibles</span>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat">
+      <span class="stat-num">2K+</span>
+      <span class="stat-label">Estudiantes activos</span>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat">
+      <span class="stat-num">4.8 ⭐</span>
+      <span class="stat-label">Calificación promedio</span>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat">
+      <span class="stat-num">24/7</span>
+      <span class="stat-label">Acceso disponible</span>
+    </div>
   </section>
 
-  <!-- 📦 CURSOS -->
-  <section class="courses">
+  <section class="categories-section">
+    <h2 class="section-title">Explora por <span>categoría</span></h2>
 
+    <div class="category-grid">
+      <div class="category-card cat-dev">
+        <span class="cat-icon">💻</span>
+        <h4>Programación</h4>
+        <p>Cursos de desarrollo web</p>
+      </div>
+
+      <div class="category-card cat-data">
+        <span class="cat-icon">📊</span>
+        <h4>Data Science</h4>
+        <p>Datos, análisis e IA</p>
+      </div>
+
+      <div class="category-card cat-design">
+        <span class="cat-icon">🎨</span>
+        <h4>Diseño</h4>
+        <p>UI, UX y creatividad</p>
+      </div>
+
+      <div class="category-card cat-ai">
+        <span class="cat-icon">🤖</span>
+        <h4>Inteligencia Artificial</h4>
+        <p>Automatización y modelos</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="filter-section">
+    <h2 class="section-title">Cursos <span>destacados</span></h2>
+
+    <div class="categories">
+      <button (click)="filter('all')" class="active">Todos</button>
+      <button (click)="filter('programacion')">Programación</button>
+      <button (click)="filter('data')">Data Science</button>
+      <button (click)="filter('diseno')">Diseño</button>
+    </div>
+  </section>
+
+  <section class="courses">
     <div class="card" *ngFor="let curso of cursos">
 
-      <div class="emoji">
-        {{ curso.emoji }}
+      <div class="card-top">
+        <div class="emoji">
+          {{ curso.emoji }}
+        </div>
+
+        <span class="card-badge">
+          {{ curso.nivel }}
+        </span>
       </div>
 
       <h3>{{ curso.titulo }}</h3>
 
       <p>{{ curso.descripcion }}</p>
 
-      <!-- 🔥 NIVEL DEL CURSO -->
       <p class="nivel">Plan requerido: {{ curso.nivel }}</p>
 
       <div class="info">
-        ⭐ {{ curso.rating }}
-        <span *ngIf="curso.precio === 0">Gratis</span>
-        <span *ngIf="curso.precio > 0">${{ curso.precio }}</span>
+        <span>⭐ {{ curso.rating }}</span>
+
+        <span *ngIf="curso.precio === 0" class="precio-gratis">Gratis</span>
+        <span *ngIf="curso.precio > 0" class="precio-pago">${{ curso.precio }}</span>
       </div>
 
-      <!-- 🔒 BOTÓN BLOQUEADO -->
-      <button 
-        class="btn-primary" 
-        [disabled]="!puedeAcceder(curso)"
-        (click)="verCurso(curso)"
-      >
-        {{ puedeAcceder(curso) ? 'Ver Curso' : '🔒 Bloqueado' }}
-      </button>
+      <div class="card-footer">
+        <button 
+          class="btn-primary" 
+          [disabled]="!puedeAcceder(curso)"
+          (click)="verCurso(curso)"
+        >
+          {{ puedeAcceder(curso) ? 'Ver Curso →' : '🔒 Bloqueado' }}
+        </button>
+      </div>
 
     </div>
+  </section>
 
+  <section class="cta-banner">
+    <div class="cta-content">
+      <h2>¿Listo para llevar tus habilidades al siguiente nivel?</h2>
+      <p>Accede a más contenido con nuestros planes y aprende sin límites.</p>
+      <a routerLink="/planes" class="cta-btn">Ver planes →</a>
+    </div>
+
+    <div class="cta-visual">
+      <div class="cta-orb"></div>
+      <div class="cta-stat">🚀 Mejora tu aprendizaje hoy</div>
+    </div>
   </section>
 
 </div>
