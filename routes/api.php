@@ -7,15 +7,15 @@ use App\Http\Controllers\CursoController;
 use App\Models\Historial;
 use App\Models\Suscripcion;
 
-// 🔥 AUTENTICACIÓN
+//AUTENTICACIÓN
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// 🔥 CURSOS
+// CURSOS
 Route::get('/cursos', [CursoController::class, 'index']);
 Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
-// 🔥 HISTORIAL (OBTENER POR USUARIO)
+// HISTORIAL
 Route::get('/historial/{id}', function ($id) {
     return response()->json(
         Historial::where('user_id', $id)
@@ -24,7 +24,7 @@ Route::get('/historial/{id}', function ($id) {
     );
 });
 
-// 🔥 HISTORIAL (GUARDAR ACCIONES)
+// HISTORIAL
 Route::post('/historial', function (Request $request) {
 
     if (!$request->user_id || !$request->accion) {
@@ -39,7 +39,7 @@ Route::post('/historial', function (Request $request) {
     return response()->json($historial, 201);
 });
 
-// 🔥 SUSCRIPCIONES (CREAR)
+// SUSCRIPCIONES 
 Route::post('/suscripcion', function (Request $request) {
 
     if (!$request->user_id || !$request->plan) {
@@ -59,7 +59,7 @@ Route::post('/suscripcion', function (Request $request) {
     return response()->json($sus, 201);
 });
 
-// 🔥 SUSCRIPCIONES (OBTENER ACTIVA)
+//SUSCRIPCIONES 
 Route::get('/suscripcion/{id}', function ($id) {
 
     $sus = Suscripcion::where('user_id', $id)
@@ -69,7 +69,40 @@ Route::get('/suscripcion/{id}', function ($id) {
     return response()->json($sus);
 });
 
-// 🔧 TEST
+//TEST
 Route::get('/test', function () {
     return response()->json(['status' => 'ok']);
+});
+
+//REPORTE 1: INGRESOS POR PLAN
+Route::get('/reporte/ingresos', function () {
+
+    return \App\Models\Suscripcion::selectRaw('plan, COUNT(*) as total, COUNT(*) * 20 as ingresos')
+        ->groupBy('plan')
+        ->get();
+});
+
+
+//REPORTE 2: CURSOS MÁS INSCRITOS
+Route::get('/reporte/cursos', function () {
+
+    return \App\Models\Historial::selectRaw('accion, COUNT(*) as total')
+        ->where('accion', 'like', 'Se inscribió al curso%')
+        ->groupBy('accion')
+        ->orderByDesc('total')
+        ->limit(5)
+        ->get();
+});
+
+
+//REPORTE 3: USUARIOS ACTIVOS
+Route::get('/reporte/usuarios', function () {
+
+    $activos = \App\Models\Suscripcion::count();
+    $total = \App\Models\User::count();
+
+    return response()->json([
+        'activos' => $activos,
+        'inactivos' => $total - $activos
+    ]);
 });
