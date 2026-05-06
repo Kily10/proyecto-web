@@ -98,51 +98,19 @@ Route::get('/reporte/cursos', function () {
 
 
 //REPORTE 3: USUARIOS ACTIVOS
-Route::get('/reporte/usuarios', function () {
-
-    $activos = \App\Models\Suscripcion::count();
-    $total = \App\Models\User::count();
-
-    return response()->json([
-        'activos' => $activos,
-        'inactivos' => $total - $activos
-    ]);
-});
-
-//SIMULAR PAGO
 Route::post('/pago', function (Request $request) {
 
-    if (!$request->user_id || !$request->plan) {
-        return response()->json(['error' => 'Datos incompletos'], 400);
+    try {
+
+        return response()->json([
+            'mensaje' => 'ENTRO AL ENDPOINT',
+            'datos' => $request->all()
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'line' => $e->getLine()
+        ], 500);
     }
-
-    //precios
-    $precios = [
-        'Platino' => 20,
-        'Gold' => 30,
-        'Diamante' => 50
-    ];
-
-    $monto = $precios[$request->plan] ?? 0;
-
-    //guardar pago
-    $pago = Pago::create([
-        'user_id' => $request->user_id,
-        'plan' => $request->plan,
-        'monto' => $monto,
-        'estado' => 'aprobado'
-    ]);
-
-    //crear suscripción
-    $suscripcion = Suscripcion::create([
-        'user_id' => $request->user_id,
-        'plan' => $request->plan,
-        'inicio' => now(),
-        'fin' => now()->addMonth()
-    ]);
-
-    return response()->json([
-        'pago' => $pago,
-        'suscripcion' => $suscripcion
-    ]);
 });
