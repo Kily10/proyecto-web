@@ -2,15 +2,13 @@
 
   <h1>📊 Mi Historial</h1>
 
-  <div *ngIf="historial.length === 0" class="empty">
-    📭 Aún no tienes registros
+  <div *ngIf="historial.length === 0">
+    📭 Sin registros
   </div>
 
   <div class="card" *ngFor="let h of historial">
 
-    <!-- 🔥 MOSTRAR TODO DESDE BD -->
-    <h3>📝 {{ h.accion }}</h3>
-
+    <p>📝 {{ h.accion }}</p>
     <p>📅 {{ h.created_at }}</p>
 
   </div>
