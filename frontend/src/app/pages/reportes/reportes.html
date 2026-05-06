@@ -2,29 +2,22 @@
 
   <h1>📊 Reportes</h1>
 
-  <!-- DEBUG -->
-  <p>Ingresos: {{ ingresos.length }}</p>
-  <p>Cursos: {{ cursos.length }}</p>
+  <h2>💰 Ingresos</h2>
 
-  <!-- 💰 INGRESOS -->
-  <h2>💰 Ingresos por plan</h2>
-
-  <div *ngIf="ingresos.length === 0">
-    📭 No hay datos
+  <div *ngIf="!ingresos?.length">
+    No hay datos
   </div>
 
   <div *ngFor="let i of ingresos" class="card">
     <p>Plan: {{ i.plan }}</p>
-    <p>Total: {{ i.total }}</p>
+    <p>Usuarios: {{ i.total }}</p>
     <p>Ingresos: ${{ i.ingresos }}</p>
   </div>
 
+  <h2>🔥 Cursos</h2>
 
-  <!-- 🔥 CURSOS -->
-  <h2>🔥 Cursos más inscritos</h2>
-
-  <div *ngIf="cursos.length === 0">
-    📭 No hay datos
+  <div *ngIf="!cursos?.length">
+    No hay datos
   </div>
 
   <div *ngFor="let c of cursos" class="card">
@@ -32,8 +25,6 @@
     <p>Total: {{ c.total }}</p>
   </div>
 
-
-  <!-- 👥 USUARIOS -->
   <h2>👥 Usuarios</h2>
 
   <div class="card">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,37 +12,33 @@ import { HttpClient } from '@angular/common/http';
 export class HistorialComponent implements OnInit {
 
   historial: any[] = [];
-  user: any;
+  user: any = null;
 
   private API = 'http://127.0.0.1:8000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-
-    this.user = JSON.parse(localStorage.getItem('user') || 'null');
-
-    console.log('👤 USER:', this.user);
-
-    if (!this.user || !this.user.id) {
-      console.warn('❌ No hay usuario');
-      return;
-    }
-
-    this.cargarHistorial();
+    this.loadUserAndData();
   }
 
-  cargarHistorial() {
-    this.http.get(`${this.API}/historial/${this.user.id}`)
-      .subscribe({
-        next: (data: any) => {
-          console.log('📊 HISTORIAL:', data);
-          this.historial = data;
-        },
-        error: (err) => {
-          console.error('❌ Error historial:', err);
-        }
+  loadUserAndData() {
+
+    const stored = localStorage.getItem('user');
+
+    if (!stored) return;
+
+    this.user = JSON.parse(stored);
+
+    if (!this.user?.id) return;
+
+    this.http.get<any[]>(`${this.API}/historial/${this.user.id}`)
+      .subscribe(res => {
+        this.historial = res || [];
+        this.cd.detectChanges(); // 🔥 CLAVE
       });
   }
-
 }

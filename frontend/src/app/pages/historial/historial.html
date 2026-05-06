@@ -2,18 +2,13 @@
 
   <h1>📊 Mi Historial</h1>
 
-  <!-- DEBUG -->
-  <p>Total registros: {{ historial.length }}</p>
-
-  <div *ngIf="historial.length === 0">
+  <div *ngIf="!historial?.length">
     📭 Sin registros
   </div>
 
   <div *ngFor="let h of historial" class="card">
-
-    <p><strong>📝</strong> {{ h.accion }}</p>
-    <p><strong>📅</strong> {{ h.created_at }}</p>
-
+    <p>📝 {{ h.accion }}</p>
+    <p>📅 {{ h.created_at }}</p>
   </div>
 
 </div>

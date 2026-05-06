@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,41 +17,33 @@ export class ReportesComponent implements OnInit {
 
   private API = 'http://127.0.0.1:8000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.cargarReportes();
+    this.loadReportes();
   }
 
-  cargarReportes() {
+  loadReportes() {
 
-    this.http.get(`${this.API}/reporte/ingresos`)
-      .subscribe({
-        next: (data: any) => {
-          console.log('💰 INGRESOS:', data);
-          this.ingresos = data;
-        },
-        error: err => console.error(err)
+    this.http.get<any>(`${this.API}/reporte/ingresos`)
+      .subscribe(res => {
+        this.ingresos = res || [];
+        this.cd.detectChanges(); // 🔥 CLAVE
       });
 
-    this.http.get(`${this.API}/reporte/cursos`)
-      .subscribe({
-        next: (data: any) => {
-          console.log('🔥 CURSOS:', data);
-          this.cursos = data;
-        },
-        error: err => console.error(err)
+    this.http.get<any>(`${this.API}/reporte/cursos`)
+      .subscribe(res => {
+        this.cursos = res || [];
+        this.cd.detectChanges(); // 🔥 CLAVE
       });
 
-    this.http.get(`${this.API}/reporte/usuarios`)
-      .subscribe({
-        next: (data: any) => {
-          console.log('👥 USUARIOS:', data);
-          this.usuarios = data;
-        },
-        error: err => console.error(err)
+    this.http.get<any>(`${this.API}/reporte/usuarios`)
+      .subscribe(res => {
+        this.usuarios = res || { activos: 0, inactivos: 0 };
+        this.cd.detectChanges(); // 🔥 CLAVE
       });
-
   }
-
 }
