@@ -17,65 +17,35 @@ export class CursoComponent {
 
   private API = 'http://127.0.0.1:8000/api';
 
-  cursos = [
-    {
-      id: 1,
-      titulo: 'Angular desde cero',
-      descripcion: 'Aprende Angular paso a paso',
-      precio: 0,
-      rating: 5,
-      emoji: '💻',
-      nivel: 'Gratis',
-      temas: ['Componentes', 'Rutas', 'Servicios']
-    },
-    {
-      id: 2,
-      titulo: 'Python',
-      descripcion: 'Programación desde cero',
-      precio: 20,
-      rating: 5,
-      emoji: '🐍',
-      nivel: 'Platino',
-      temas: ['Variables', 'Funciones', 'Listas']
-    },
-    {
-      id: 3,
-      titulo: 'Data Science',
-      descripcion: 'Análisis de datos',
-      precio: 25,
-      rating: 4,
-      emoji: '📊',
-      nivel: 'Gold',
-      temas: ['Pandas', 'Gráficas', 'Modelos']
-    },
-    {
-      id: 4,
-      titulo: 'Diseño UI',
-      descripcion: 'Interfaces modernas',
-      precio: 30,
-      rating: 4,
-      emoji: '🎨',
-      nivel: 'Diamante',
-      temas: ['UX', 'Figma', 'Prototipos']
-    }
-  ];
-
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.curso = this.cursos.find(c => c.id === id);
+    const id = this.route.snapshot.paramMap.get('id');
 
-    if (!this.curso) {
-      alert('Curso no encontrado');
-    }
+    // 🔥 AHORA DESDE BACKEND
+    this.http.get(`${this.API}/cursos/${id}`)
+      .subscribe({
+        next: (data: any) => {
+          this.curso = data;
+
+          // 🔥 material de ejemplo (luego lo puedes traer de BD)
+          this.curso.temas = [
+            'Introducción',
+            'Conceptos básicos',
+            'Proyecto práctico'
+          ];
+        },
+        error: () => {
+          alert('Curso no encontrado ❌');
+        }
+      });
   }
 
   // 🔒 VALIDAR ACCESO SEGÚN PLAN
   puedeAcceder(): boolean {
-    const plan = this.user.plan || 'Gratis';
+    const plan = this.user?.plan || 'Gratis';
 
     const niveles: any = {
       'Gratis': 1,
@@ -84,13 +54,15 @@ export class CursoComponent {
       'Diamante': 4
     };
 
+    if (!this.curso?.nivel) return true;
+
     return niveles[plan] >= niveles[this.curso.nivel];
   }
 
   // 🔥 INSCRIPCIÓN REAL (BD)
   inscribirse() {
 
-    if (!this.user.id) {
+    if (!this.user?.id) {
       alert('Debes iniciar sesión');
       return;
     }
@@ -111,7 +83,6 @@ export class CursoComponent {
         alert('Error al guardar ❌');
       }
     });
-
   }
 
 }
