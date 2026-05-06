@@ -23,35 +23,49 @@ export class ReportesComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    this.cargarReportes();
+  }
+
+  cargarReportes() {
 
     // 💰 INGRESOS
     this.http.get(`${this.API}/reporte/ingresos`)
       .subscribe({
-        next: (data: any) => {
-          console.log('💰 INGRESOS:', data);
-          this.ingresos = data || [];
+        next: (res: any) => {
+          console.log('💰 INGRESOS:', res);
+          this.ingresos = Array.isArray(res) ? res : [];
         },
-        error: (err) => console.error('❌ Error ingresos:', err)
+        error: (err) => {
+          console.error('❌ Error ingresos:', err);
+          this.ingresos = [];
+        }
       });
 
     // 🔥 CURSOS
     this.http.get(`${this.API}/reporte/cursos`)
       .subscribe({
-        next: (data: any) => {
-          console.log('🔥 CURSOS:', data);
-          this.cursos = data || [];
+        next: (res: any) => {
+          console.log('🔥 CURSOS:', res);
+          this.cursos = Array.isArray(res) ? res : [];
         },
-        error: (err) => console.error('❌ Error cursos:', err)
+        error: (err) => {
+          console.error('❌ Error cursos:', err);
+          this.cursos = [];
+        }
       });
 
     // 👥 USUARIOS
     this.http.get(`${this.API}/reporte/usuarios`)
       .subscribe({
-        next: (data: any) => {
-          console.log('👥 USUARIOS:', data);
-          this.usuarios = data || { activos: 0, inactivos: 0 };
+        next: (res: any) => {
+          console.log('👥 USUARIOS:', res);
+          this.usuarios = res || { activos: 0, inactivos: 0 };
         },
-        error: (err) => console.error('❌ Error usuarios:', err)
+        error: (err) => {
+          console.error('❌ Error usuarios:', err);
+          this.usuarios = { activos: 0, inactivos: 0 };
+        }
       });
+
   }
 }
