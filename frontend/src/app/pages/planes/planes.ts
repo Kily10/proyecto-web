@@ -20,6 +20,7 @@ export class PlanesComponent {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
   }
 
+  // 💳 PAGO + SUSCRIPCIÓN REAL
   suscribirse(plan: string) {
 
     if (!this.user.id) {
@@ -27,26 +28,26 @@ export class PlanesComponent {
       return;
     }
 
-    this.http.post(`${this.API}/suscripcion`, {
+    this.http.post(`${this.API}/pago`, {
       user_id: this.user.id,
       plan: plan
     }).subscribe({
-      next: () => {
+      next: (res: any) => {
 
-        // 🔥 actualizar usuario local
-        this.user.plan = plan;
+        // 🔥 actualizar plan en frontend
+        this.user.plan = res.suscripcion.plan;
         localStorage.setItem('user', JSON.stringify(this.user));
 
-        // 🔥 guardar historial
+        // 🔥 guardar en historial
         this.http.post(`${this.API}/historial`, {
           user_id: this.user.id,
-          accion: 'Se suscribió al plan ' + plan
+          accion: 'Pagó y activó plan ' + plan
         }).subscribe();
 
-        alert('Plan activado: ' + plan + ' ✅');
+        alert('Pago realizado 💳✅ Plan: ' + plan);
       },
       error: () => {
-        alert('Error al suscribirse ❌');
+        alert('Error en el pago ❌');
       }
     });
 
