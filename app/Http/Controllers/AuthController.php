@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // 🔥 REGISTRO
+    //  REGISTRO
     public function register(Request $request)
     {
         $request->validate([
@@ -20,10 +20,13 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->email,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+
+            // IMPORTANTE: rol por defecto
+            'role' => 'estudiante'
         ]);
 
-        // 🔥 GUARDAR HISTORIAL
+        // 📊 historial
         Historial::create([
             'user_id' => $user->id,
             'accion' => 'Registro de usuario'
@@ -31,11 +34,15 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'user' => $user
+            'user' => [
+                'id' => $user->id,
+                'email' => $user->email,
+                'role' => $user->role
+            ]
         ]);
     }
 
-    // 🔥 LOGIN
+    // LOGIN
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -47,7 +54,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        // 🔥 GUARDAR HISTORIAL
+        // 📊 historial
         Historial::create([
             'user_id' => $user->id,
             'accion' => 'Inicio de sesión'
@@ -55,7 +62,11 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'user' => $user
+            'user' => [
+                'id' => $user->id,
+                'email' => $user->email,
+                'role' => $user->role
+            ]
         ]);
     }
 }
