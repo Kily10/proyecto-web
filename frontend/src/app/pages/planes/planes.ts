@@ -11,33 +11,42 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PlanesComponent {
 
+  user: any;
   private API = 'http://127.0.0.1:8000/api';
 
   constructor(private http: HttpClient) {}
 
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+  }
+
   suscribirse(plan: string) {
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    if (!user.id) {
+    if (!this.user.id) {
       alert('Debes iniciar sesión');
       return;
     }
 
-    // 🔥 actualizar plan en sesión
-    user.plan = plan;
-    localStorage.setItem('user', JSON.stringify(user));
-
-    // 🔥 guardar en BD (historial)
-    this.http.post(`${this.API}/historial`, {
-      user_id: user.id,
-      accion: 'Compró plan ' + plan
+    this.http.post(`${this.API}/suscripcion`, {
+      user_id: this.user.id,
+      plan: plan
     }).subscribe({
       next: () => {
-        alert('Suscripción activada: ' + plan + ' ✅');
+
+        // 🔥 actualizar usuario local
+        this.user.plan = plan;
+        localStorage.setItem('user', JSON.stringify(this.user));
+
+        // 🔥 guardar historial
+        this.http.post(`${this.API}/historial`, {
+          user_id: this.user.id,
+          accion: 'Se suscribió al plan ' + plan
+        }).subscribe();
+
+        alert('Plan activado: ' + plan + ' ✅');
       },
       error: () => {
-        alert('Error al guardar ❌');
+        alert('Error al suscribirse ❌');
       }
     });
 

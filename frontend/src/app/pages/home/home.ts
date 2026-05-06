@@ -23,11 +23,24 @@ export class HomeComponent {
 
   categoriaActual = 'all';
 
+  private API = 'http://127.0.0.1:8000/api';
+
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // 🔥 consumir API Laravel
-    this.http.get('http://127.0.0.1:8000/api/cursos')
+    // 🔥 TRAER PLAN REAL DESDE BD
+    if (this.user?.id) {
+      this.http.get(`${this.API}/suscripcion/${this.user.id}`)
+        .subscribe((res: any) => {
+          if (res) {
+            this.user.plan = res.plan;
+            localStorage.setItem('user', JSON.stringify(this.user));
+          }
+        });
+    }
+
+    // 🔥 CURSOS DESDE BACKEND
+    this.http.get(`${this.API}/cursos`)
       .subscribe((data: any) => {
         this.cursos = data;
         this.cursosOriginal = data;
@@ -45,7 +58,8 @@ export class HomeComponent {
       'Gold': 3,
       'Diamante': 4
     };
-    if (!curso.nivel) return true;
+
+    if (!curso?.nivel) return true;
 
     return niveles[plan] >= niveles[curso.nivel];
   }
