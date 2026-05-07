@@ -9,11 +9,13 @@ import { PlanesComponent } from './pages/planes/planes';
 import { ReportesComponent } from './pages/reportes/reportes';
 import { adminGuard } from '../admin.guard';
 import { AdminComponent } from './pages/admin/admin';
+import { PagoComponent } from './pages/pago/pago';
 
 
 export const routes = [
 
   { path: '', component: LoginComponent },
+  { path: 'pago/:plan', component: PagoComponent, canActivate: [authGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [authGuard] },
   { path: 'reportes', component: ReportesComponent, canActivate: [adminGuard] },
   { path: 'planes', component: PlanesComponent, canActivate: [authGuard] },
