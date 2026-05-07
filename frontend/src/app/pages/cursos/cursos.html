@@ -7,21 +7,35 @@
     <div class="card" *ngFor="let curso of cursos">
 
       <div class="emoji">
-        {{ curso.emoji }}
+        {{ curso.emoji || '📘' }}
       </div>
 
-      <h3>{{ curso.titulo }}</h3>
+      <h3>
+        {{ curso.titulo || 'Curso sin título' }}
+      </h3>
 
-      <p>{{ curso.descripcion }}</p>
+      <p>
+        {{ curso.descripcion || 'Sin descripción' }}
+      </p>
 
       <div class="info">
-        ⭐ {{ curso.rating }}
-        <span *ngIf="curso.precio === 0">Gratis</span>
-        <span *ngIf="curso.precio > 0">${{ curso.precio }}</span>
+
+        <span>
+          ⭐ {{ curso.rating || 5 }}
+        </span>
+
+        <span>
+          💰 ${{ curso.precio || 0 }}
+        </span>
+
       </div>
 
+      <p>
+        🔒 {{ curso.nivel || 'Gratis' }}
+      </p>
+
       <button (click)="entrarCurso(curso)">
-        Entrar
+        Entrar al Curso →
       </button>
 
     </div>

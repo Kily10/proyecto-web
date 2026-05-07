@@ -42,7 +42,9 @@ export class HomeComponent {
     // 🔥 CURSOS DESDE BACKEND
     this.http.get(`${this.API}/cursos`)
       .subscribe((data: any) => {
-        this.cursos = data;
+        this.cursos = [...data];
+        
+        console.log('CURSOS FRONT:', this.cursos);
         this.cursosOriginal = data;
       });
   }

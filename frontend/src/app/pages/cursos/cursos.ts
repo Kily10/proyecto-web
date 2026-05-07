@@ -1,60 +1,61 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
+
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cursos',
   standalone: true,
-  imports: [CommonModule],  
+  imports: [CommonModule],
   templateUrl: './cursos.html',
   styleUrls: ['./cursos.css']
 })
-export class CursosComponent {
+export class CursosComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  cursos: any[] = [];
 
-  cursos = [
-    {
-      id: 1,
-      titulo: 'Angular desde cero',
-      descripcion: 'Aprende Angular paso a paso',
-      precio: 0,
-      rating: 5,
-      emoji: '💻'
-    },
-    
-    {
-      id: 2,
-      titulo: 'Python para todos',
-      descripcion: 'Introducción a Python',
-      precio: 20,
-      rating: 4,
-      emoji: '🐍'
-    },
+  private API = 'http://127.0.0.1:8000/api';
 
-    {
-      id: 3,
-      titulo: 'Data Science',
-      descripcion: 'Análisis de datos',
-      precio: 25,
-      rating: 4,
-      emoji: '📊'
-    },
-    {
-      id: 4,
-      titulo: 'Diseño UI',
-      descripcion: 'Interfaces modernas',
-      precio: 30,
-      rating: 4,
-      emoji: '🎨'
-    }
-  ];
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private cd: ChangeDetectorRef
+  ) {}
 
-  entrarCurso(curso: any) {
-    alert('Entrando a ' + curso.titulo);
+  ngOnInit(): void {
 
-    // futuro:
-    // this.router.navigate(['/curso', curso.id]);
+    this.obtenerCursos();
   }
 
+  obtenerCursos(): void {
+
+    this.http.get<any[]>(`${this.API}/cursos`)
+      .subscribe({
+
+        next: (data) => {
+
+          console.log('📚 CURSOS:', data);
+
+          this.cursos = data || [];
+
+          // 🔥 FORZAR REFRESH VISUAL
+          this.cd.detectChanges();
+        },
+
+        error: (err) => {
+
+          console.error('❌ Error cursos:', err);
+        }
+      });
+  }
+
+  entrarCurso(curso: any): void {
+
+    this.router.navigate(['/curso', curso.id]);
+  }
 }
