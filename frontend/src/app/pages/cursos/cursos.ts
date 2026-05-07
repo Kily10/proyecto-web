@@ -62,16 +62,34 @@ export class CursosComponent implements OnInit {
   }
 
   entrarCurso(curso: any): void {
+ 
+     if (!this.user?.id) {
 
-    // 🔒 SI NO HAY USER
-    if (!this.user?.id) {
-
-      alert('Debes iniciar sesión');
+       alert('Debes iniciar sesión');
 
       return;
     }
 
-    // 📚 GUARDAR INSCRIPCIÓN
+    // 🔥 PLAN DEL USER
+    const plan = this.user?.plan || 'Gratis';
+
+    // 🔥 NIVELES
+    const niveles: any = {
+      'Gratis': 1,
+      'Platino': 2,
+      'Gold': 3,
+      'Diamante': 4
+    };
+
+  // 🔒 SI NO TIENE ACCESO
+    if (niveles[plan] < niveles[curso.nivel]) {
+
+      alert('🔒 Necesitas un plan mayor');
+
+      return;
+    }
+
+   // 📚 INSCRIPCIÓN
     this.http.post(`${this.API}/inscribirse`, {
 
       user_id: this.user.id,
@@ -79,19 +97,13 @@ export class CursosComponent implements OnInit {
 
     }).subscribe({
 
-      next: (res: any) => {
+      next: () => {
 
-        console.log('✅ INSCRIPCIÓN:', res);
-
-        // 🚀 ENTRAR AL CURSO
         this.router.navigate(['/curso', curso.id]);
       },
 
-      error: (err) => {
+      error: () => {
 
-        console.error('❌ Error inscripción:', err);
-
-        // AUN ASÍ ENTRA
         this.router.navigate(['/curso', curso.id]);
       }
     });

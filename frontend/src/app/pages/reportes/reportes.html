@@ -2,34 +2,47 @@
 
   <h1>📊 Reportes</h1>
 
-  <h2>💰 Ingresos</h2>
+  <!-- 💰 INGRESOS -->
+  <div class="box">
 
-  <div *ngIf="!ingresos?.length">
-    No hay datos
+    <h2>💰 Ingresos</h2>
+
+    <canvas id="chartIngresos"></canvas>
+
+    <div *ngFor="let i of ingresos" class="card">
+      <p>Plan: {{ i.plan }}</p>
+      <p>Usuarios: {{ i.total }}</p>
+      <p>Ingresos: ${{ i.ingresos }}</p>
+    </div>
+
   </div>
 
-  <div *ngFor="let i of ingresos" class="card">
-    <p>Plan: {{ i.plan }}</p>
-    <p>Usuarios: {{ i.total }}</p>
-    <p>Ingresos: ${{ i.ingresos }}</p>
+  <!-- 🔥 CURSOS -->
+  <div class="box">
+
+    <h2>🔥 Cursos más inscritos</h2>
+
+    <canvas id="chartCursos"></canvas>
+
+    <div *ngFor="let c of cursos" class="card">
+      <p>{{ c.accion }}</p>
+      <p>Total: {{ c.total }}</p>
+    </div>
+
   </div>
 
-  <h2>🔥 Cursos</h2>
+  <!-- 👥 USUARIOS -->
+  <div class="box">
 
-  <div *ngIf="!cursos?.length">
-    No hay datos
-  </div>
+    <h2>👥 Usuarios</h2>
 
-  <div *ngFor="let c of cursos" class="card">
-    <p>{{ c.accion }}</p>
-    <p>Total: {{ c.total }}</p>
-  </div>
+    <canvas id="chartUsuarios"></canvas>
 
-  <h2>👥 Usuarios</h2>
+    <div class="card">
+      <p>Activos: {{ usuarios?.activos }}</p>
+      <p>Inactivos: {{ usuarios?.inactivos }}</p>
+    </div>
 
-  <div class="card">
-    <p>Activos: {{ usuarios?.activos }}</p>
-    <p>Inactivos: {{ usuarios?.inactivos }}</p>
   </div>
 
 </div>
