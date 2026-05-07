@@ -19,6 +19,8 @@ export class CursosComponent implements OnInit {
 
   cursos: any[] = [];
 
+  user: any;
+
   private API = 'http://127.0.0.1:8000/api';
 
   constructor(
@@ -28,6 +30,11 @@ export class CursosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    // 👤 OBTENER USER
+    this.user = JSON.parse(
+      localStorage.getItem('user') || '{}'
+    );
 
     this.obtenerCursos();
   }
@@ -43,7 +50,7 @@ export class CursosComponent implements OnInit {
 
           this.cursos = data || [];
 
-          // 🔥 FORZAR REFRESH VISUAL
+          // 🔥 REFRESH VISUAL
           this.cd.detectChanges();
         },
 
@@ -56,6 +63,37 @@ export class CursosComponent implements OnInit {
 
   entrarCurso(curso: any): void {
 
-    this.router.navigate(['/curso', curso.id]);
+    // 🔒 SI NO HAY USER
+    if (!this.user?.id) {
+
+      alert('Debes iniciar sesión');
+
+      return;
+    }
+
+    // 📚 GUARDAR INSCRIPCIÓN
+    this.http.post(`${this.API}/inscribirse`, {
+
+      user_id: this.user.id,
+      curso_id: curso.id
+
+    }).subscribe({
+
+      next: (res: any) => {
+
+        console.log('✅ INSCRIPCIÓN:', res);
+
+        // 🚀 ENTRAR AL CURSO
+        this.router.navigate(['/curso', curso.id]);
+      },
+
+      error: (err) => {
+
+        console.error('❌ Error inscripción:', err);
+
+        // AUN ASÍ ENTRA
+        this.router.navigate(['/curso', curso.id]);
+      }
+    });
   }
 }
