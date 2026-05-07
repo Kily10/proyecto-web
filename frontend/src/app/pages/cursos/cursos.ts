@@ -18,7 +18,6 @@ import { HttpClient } from '@angular/common/http';
 export class CursosComponent implements OnInit {
 
   cursos: any[] = [];
-
   user: any;
 
   private API = 'http://127.0.0.1:8000/api';
@@ -31,7 +30,6 @@ export class CursosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // 👤 OBTENER USER
     this.user = JSON.parse(
       localStorage.getItem('user') || '{}'
     );
@@ -50,7 +48,6 @@ export class CursosComponent implements OnInit {
 
           this.cursos = data || [];
 
-          // 🔥 REFRESH VISUAL
           this.cd.detectChanges();
         },
 
@@ -61,19 +58,10 @@ export class CursosComponent implements OnInit {
       });
   }
 
-  entrarCurso(curso: any): void {
- 
-     if (!this.user?.id) {
+  puedeAcceder(nivelCurso: string): boolean {
 
-       alert('Debes iniciar sesión');
-
-      return;
-    }
-
-    // 🔥 PLAN DEL USER
     const plan = this.user?.plan || 'Gratis';
 
-    // 🔥 NIVELES
     const niveles: any = {
       'Gratis': 1,
       'Platino': 2,
@@ -81,15 +69,25 @@ export class CursosComponent implements OnInit {
       'Diamante': 4
     };
 
-  // 🔒 SI NO TIENE ACCESO
-    if (niveles[plan] < niveles[curso.nivel]) {
+    return niveles[plan] >= niveles[nivelCurso || 'Gratis'];
+  }
+
+  entrarCurso(curso: any): void {
+
+    if (!this.user?.id) {
+
+      alert('Debes iniciar sesión');
+
+      return;
+    }
+
+    if (!this.puedeAcceder(curso.nivel)) {
 
       alert('🔒 Necesitas un plan mayor');
 
       return;
     }
 
-   // 📚 INSCRIPCIÓN
     this.http.post(`${this.API}/inscribirse`, {
 
       user_id: this.user.id,
@@ -109,3 +107,4 @@ export class CursosComponent implements OnInit {
     });
   }
 }
+

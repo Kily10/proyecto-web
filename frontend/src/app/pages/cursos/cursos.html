@@ -1,3 +1,4 @@
+```html
 <div class="cursos">
 
   <h1>📚 Todos los Cursos</h1>
@@ -34,8 +35,20 @@
         🔒 {{ curso.nivel || 'Gratis' }}
       </p>
 
-      <button (click)="entrarCurso(curso)">
-        Entrar al Curso →
+      <button
+        class="btn-curso"
+        [class.bloqueado]="!puedeAcceder(curso.nivel)"
+        (click)="entrarCurso(curso)"
+      >
+
+        <span *ngIf="puedeAcceder(curso.nivel)">
+          Entrar al Curso →
+        </span>
+
+        <span *ngIf="!puedeAcceder(curso.nivel)">
+          🔒 Curso Bloqueado
+        </span>
+
       </button>
 
     </div>
@@ -43,3 +56,4 @@
   </div>
 
 </div>
+```
