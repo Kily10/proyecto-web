@@ -1,0 +1,83 @@
+<section class="pago-page">
+
+  <div class="resumen-plan">
+
+    <h1>💳 Confirmar Pago</h1>
+
+    <p>Estás comprando el plan:</p>
+
+    <h2>{{ plan }}</h2>
+
+    <span class="precio">
+      ${{ precio }} / mes
+    </span>
+
+    <p class="nota">
+      Pago simulado para activar tu suscripción en EduFlow.
+    </p>
+
+  </div>
+
+  <form class="form">
+
+    <label class="label">
+      <span class="title">Nombre del titular</span>
+      <input
+        class="input-field"
+        type="text"
+        [(ngModel)]="nombre"
+        name="nombre"
+        placeholder="Ingresa tu nombre completo"
+      />
+    </label>
+
+    <label class="label">
+      <span class="title">Número de tarjeta</span>
+      <input
+        class="input-field"
+        type="text"
+        [(ngModel)]="tarjeta"
+        name="tarjeta"
+        maxlength="16"
+        placeholder="0000 0000 0000 0000"
+      />
+    </label>
+
+    <div class="split">
+
+      <label class="label">
+        <span class="title">Fecha</span>
+        <input
+          class="input-field"
+          type="text"
+          [(ngModel)]="fecha"
+          name="fecha"
+          placeholder="01/26"
+        />
+      </label>
+
+      <label class="label">
+        <span class="title">CVV</span>
+        <input
+          class="input-field"
+          type="password"
+          [(ngModel)]="cvv"
+          name="cvv"
+          maxlength="4"
+          placeholder="CVV"
+        />
+      </label>
+
+    </div>
+
+    <button
+      class="checkout-btn"
+      type="button"
+      (click)="pagar()"
+    >
+      Confirmar Pago
+    </button>
+
+  </form>
+
+</section>

@@ -1,60 +1,81 @@
-<head>
-<link rel="stylesheet" href="planes.css" />
-</head>
 <div class="planes">
 
-    <h1>Planes de Suscripción</h1>
+  <h1>Planes de Suscripción</h1>
 
-    <div class="cards">
+  <div class="cards">
 
-        <div class="card">
-            <h2>Platino </h2>
-            <p class="pricing">$20 <span class="pricing-time">/ mes</span></p>
-            <span class="sub-title">
-                Acceso Completo:
-                <ul class="list">
-                    <li class="list-item"><span class="check">✓</span> Acceso a cursos basicos</li>
-                    <li class="list-item"><span class="check">✓</span> Certificados descargables</li>
-                    <li class="list-item"><span class="check">✓</span> Acceso a contenido limitado</li>
-                    <li class="list-item"><span class="check">✓</span> Soporte por correo</li>
-                    <li class="list-item"><span class="check">✓</span> Acceso desde 1 dispositivo</li>
-                </ul>
-                    <button (click)="suscribirse('Platino')">💳 Pagar Platino</button>
-            </span>
-        </div>
+    <div class="card">
+      <h2>Platino</h2>
 
+      <p class="pricing">
+        $20 <span class="pricing-time">/ mes</span>
+      </p>
 
-        <div class="card">
-            <h2>Gold </h2>
-            <p class="pricing">$25 <span class="pricing-time">/ mes</span></p>
-            <span class="sub-title">
-                Acceso a Cursos Basicos:
-                <ul class="list">
-                    <li class="list-item"><span class="check">✓</span> Acceso a todos los cursos</li>
-                    <li class="list-item"><span class="check">✓</span> Proyectos practicos reales</li>
-                    <li class="list-item"><span class="check">✓</span> Certificados verificados</li>
-                    <li class="list-item"><span class="check">✓</span> Recursos exclusivos en linea</li>
-                    <li class="list-item"><span class="check">✓</span> Acceso a comunidad</li>
-                </ul>
-            </span>
-                <button (click)="suscribirse('Gold')">💳 Pagar Gold</button>
-        </div>
+      <span class="sub-title">
+        Acceso Completo:
+      </span>
 
-        <div class="card">
-            <h2>Diamante </h2>
-            <p class="pricing">$30 <span class="pricing-time">/ mes</span></p>
-            <span class="sub-title">
-                Acceso Premium + Beneficios:
-                <ul class="list">
-                    <li class="list-item"><span class="check">✓</span> Cursos avanzados exclusivos</li>
-                    <li class="list-item"><span class="check">✓</span> Mentorías</li>
-                    <li class="list-item"><span class="check">✓</span> Feedback en proyectos</li>
-                    <li class="list-item"><span class="check">✓</span> Descarga ilimitada de recursos</li>
-                    <li class="list-item"><span class="check">✓</span> Proyectos profesionales</li>
-                </ul>
-            </span>
-             <button (click)="suscribirse('Diamante')">💳 Pagar Diamante</button>
-        </div>
+      <ul class="list">
+        <li class="list-item"><span class="check">✓</span> Acceso a cursos básicos</li>
+        <li class="list-item"><span class="check">✓</span> Certificados descargables</li>
+        <li class="list-item"><span class="check">✓</span> Acceso a contenido limitado</li>
+        <li class="list-item"><span class="check">✓</span> Soporte por correo</li>
+        <li class="list-item"><span class="check">✓</span> Acceso desde 1 dispositivo</li>
+      </ul>
 
+      <button [routerLink]="['/pago', 'Platino']">
+        💳 Pagar Platino
+      </button>
     </div>
+
+    <div class="card">
+      <h2>Gold</h2>
+
+      <p class="pricing">
+        $25 <span class="pricing-time">/ mes</span>
+      </p>
+
+      <span class="sub-title">
+        Acceso a Cursos Intermedios:
+      </span>
+
+      <ul class="list">
+        <li class="list-item"><span class="check">✓</span> Acceso a todos los cursos Platino</li>
+        <li class="list-item"><span class="check">✓</span> Proyectos prácticos reales</li>
+        <li class="list-item"><span class="check">✓</span> Certificados verificados</li>
+        <li class="list-item"><span class="check">✓</span> Recursos exclusivos en línea</li>
+        <li class="list-item"><span class="check">✓</span> Acceso a comunidad</li>
+      </ul>
+
+      <button [routerLink]="['/pago', 'Gold']">
+        💳 Pagar Gold
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Diamante</h2>
+
+      <p class="pricing">
+        $30 <span class="pricing-time">/ mes</span>
+      </p>
+
+      <span class="sub-title">
+        Acceso Premium + Beneficios:
+      </span>
+
+      <ul class="list">
+        <li class="list-item"><span class="check">✓</span> Cursos avanzados exclusivos</li>
+        <li class="list-item"><span class="check">✓</span> Mentorías</li>
+        <li class="list-item"><span class="check">✓</span> Feedback en proyectos</li>
+        <li class="list-item"><span class="check">✓</span> Descarga ilimitada de recursos</li>
+        <li class="list-item"><span class="check">✓</span> Proyectos profesionales</li>
+      </ul>
+
+      <button [routerLink]="['/pago', 'Diamante']">
+        💳 Pagar Diamante
+      </button>
+    </div>
+
+  </div>
+
 </div>
