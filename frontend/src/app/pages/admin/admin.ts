@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +18,10 @@ export class AdminComponent implements OnInit {
   titulo = '';
   descripcion = '';
   categoria = '';
-  nivel = '';
+
+  // 🔥 SOLO 3 NIVELES
+  nivel = 'Platino';
+
   emoji = '';
   precio = 0;
   rating = 5;
@@ -26,54 +30,89 @@ export class AdminComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+
     this.obtenerCursos();
   }
 
-  obtenerCursos() {
+  obtenerCursos(): void {
+
     this.http.get<any[]>(`${this.API}/cursos`)
-      .subscribe(res => {
-        this.cursos = res;
-      });
-  }
-
-  crearCurso() {
-
-    const body = {
-       titulo: this.titulo,
-       descripcion: this.descripcion,
-       categoria: this.categoria,
-       nivel: this.nivel,
-       emoji: this.emoji,
-       precio: this.precio,
-       rating: this.rating
-    };
-
-    this.http.post(`${this.API}/cursos`, body)
       .subscribe({
-        next: () => {
 
-          alert('Curso creado ✅');
+        next: (res) => {
 
-          this.titulo = '';
-          this.descripcion = '';
-          this.categoria = '';
-          this.nivel = '';
-
-          this.obtenerCursos();
+          this.cursos = res || [];
         },
+
         error: (err) => {
+
           console.error(err);
-          alert('Error al crear curso ❌');
         }
       });
   }
 
-  eliminarCurso(id: number) {
+  crearCurso(): void {
+
+    const body = {
+
+      titulo: this.titulo,
+      descripcion: this.descripcion,
+      categoria: this.categoria,
+      nivel: this.nivel,
+      emoji: this.emoji,
+      precio: this.precio,
+      rating: this.rating
+    };
+
+    this.http.post(`${this.API}/cursos`, body)
+      .subscribe({
+
+        next: () => {
+
+          alert('✅ Curso creado correctamente');
+
+          this.titulo = '';
+          this.descripcion = '';
+          this.categoria = '';
+          this.nivel = 'Platino';
+          this.emoji = '';
+          this.precio = 0;
+          this.rating = 5;
+
+          this.obtenerCursos();
+        },
+
+        error: (err) => {
+
+          console.error(err);
+
+          alert('❌ Error al crear curso');
+        }
+      });
+  }
+
+  eliminarCurso(id: number): void {
+
+    const confirmar = confirm(
+      '¿Seguro que deseas eliminar este curso?'
+    );
+
+    if (!confirmar) return;
 
     this.http.delete(`${this.API}/cursos/${id}`)
-      .subscribe(() => {
-        this.obtenerCursos();
+      .subscribe({
+
+        next: () => {
+
+          this.obtenerCursos();
+        },
+
+        error: (err) => {
+
+          console.error(err);
+        }
       });
   }
 }
+

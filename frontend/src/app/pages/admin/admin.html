@@ -1,45 +1,128 @@
-<div class="admin">
+<div class="admin-container">
 
-  <h1>⚙ Panel Admin</h1>
+  <div class="admin-header">
+    <h1>⚙ Panel Administrador</h1>
+    <p>Gestiona cursos premium de EduFlow</p>
+  </div>
 
-  <h2>➕ Crear Curso</h2>
+  <!-- FORMULARIO -->
+  <div class="form-card">
 
-  <input [(ngModel)]="titulo" placeholder="Título">
+    <h2>➕ Crear Nuevo Curso</h2>
 
-  <input [(ngModel)]="descripcion" placeholder="Descripción">
+    <div class="form-grid">
 
-  <input [(ngModel)]="categoria" placeholder="Categoría">
+      <input
+        [(ngModel)]="titulo"
+        placeholder="📘 Título del curso"
+      >
 
-  <input [(ngModel)]="nivel" placeholder="Nivel">
-  
-  <input [(ngModel)]="emoji" placeholder="Emoji">
+      <input
+        [(ngModel)]="categoria"
+        placeholder="📂 Categoría"
+      >
 
-  <input type="number"[(ngModel)]="precio"placeholder="Precio">
+      <textarea
+        [(ngModel)]="descripcion"
+        placeholder="📝 Descripción del curso"
+      ></textarea>
 
-  <input type="number"[(ngModel)]="rating"placeholder="Rating">
+      <select [(ngModel)]="nivel">
 
-  <button (click)="crearCurso()">
-    Crear Curso
-  </button>
+        <option value="Platino">
+          🥈 Platino
+        </option>
 
-  <hr>
+        <option value="Gold">
+          🥇 Gold
+        </option>
 
-  <h2>📚 Cursos</h2>
+        <option value="Diamante">
+          💎 Diamante
+        </option>
 
-  <div class="card" *ngFor="let c of cursos">
+      </select>
 
-    <p><b>{{ c.titulo }}</b></p>
+      <input
+        [(ngModel)]="emoji"
+        placeholder="😀 Emoji"
+      >
 
-    <p>{{ c.descripcion }}</p>
+      <input
+        type="number"
+        [(ngModel)]="precio"
+        placeholder="💰 Precio"
+      >
 
-    <p>{{ c.categoria }}</p>
+      <input
+        type="number"
+        [(ngModel)]="rating"
+        placeholder="⭐ Rating"
+      >
 
-    <p>{{ c.nivel }}</p>
+    </div>
 
-    <button (click)="eliminarCurso(c.id)">
-      Eliminar
+    <button class="crear-btn" (click)="crearCurso()">
+      ✨ Crear Curso
     </button>
 
   </div>
 
+  <!-- LISTA CURSOS -->
+  <div class="cursos-section">
+
+    <h2>📚 Cursos Registrados</h2>
+
+    <div class="cards-grid">
+
+      <div class="curso-card" *ngFor="let c of cursos">
+
+        <div class="emoji">
+          {{ c.emoji || '📘' }}
+        </div>
+
+        <h3>{{ c.titulo }}</h3>
+
+        <p class="descripcion">
+          {{ c.descripcion }}
+        </p>
+
+        <div class="tags">
+
+          <span class="categoria">
+            📂 {{ c.categoria }}
+          </span>
+
+          <span class="nivel">
+            🔒 {{ c.nivel }}
+          </span>
+
+        </div>
+
+        <div class="bottom">
+
+          <span class="precio">
+            💰 ${{ c.precio }}
+          </span>
+
+          <span class="rating">
+            ⭐ {{ c.rating }}
+          </span>
+
+        </div>
+
+        <button
+          class="delete-btn"
+          (click)="eliminarCurso(c.id)"
+        >
+          🗑 Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
+
