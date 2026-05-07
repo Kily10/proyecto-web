@@ -18,8 +18,9 @@ export class CursoComponent implements OnInit {
   private API = 'http://127.0.0.1:8000/api';
 
   materiales: any = {
+
     Angular: {
-      imagen: 'assets/Angular.jfif',
+      imagen: 'assets/Angular_curso.jfif',
       video: '',
       temas: [
         'Introducción a Angular',
@@ -30,7 +31,7 @@ export class CursoComponent implements OnInit {
     },
 
     Python: {
-      imagen: 'assets/Python.jfif',
+      imagen: 'assets/python_curso.jfif',
       video: '',
       temas: [
         'Introducción a Python',
@@ -40,27 +41,28 @@ export class CursoComponent implements OnInit {
       ]
     },
 
-    Data: {
-      imagen: 'assets/Data.jfif',
+    PHP: {
+      imagen: 'assets/PHP_curso.jfif',
       video: '',
       temas: [
-        'Introducción a datos',
-        'Análisis básico',
-        'Visualización de datos',
-        'Proyecto práctico Data'
+        'Introducción a PHP',
+        'Variables y funciones',
+        'Formularios y validación',
+        'Proyecto práctico PHP'
       ]
     },
 
-    Web: {
-      imagen: 'assets/Custom Website.jfif',
+    CSS: {
+      imagen: 'assets/Css_curso.jfif',
       video: '',
       temas: [
-        'HTML y CSS',
-        'Diseño responsive',
-        'JavaScript básico',
-        'Proyecto página web'
+        'Introducción a CSS',
+        'Selectores y propiedades',
+        'Flexbox y Grid',
+        'Diseño responsive'
       ]
     }
+
   };
 
   constructor(
@@ -98,19 +100,24 @@ export class CursoComponent implements OnInit {
             const titulo = (this.curso.titulo || '').toLowerCase();
 
             if (titulo.includes('angular')) {
+
               this.aplicarMaterial('Angular');
+
             } else if (titulo.includes('python')) {
+
               this.aplicarMaterial('Python');
-            } else if (titulo.includes('data')) {
-              this.aplicarMaterial('Data');
-            } else if (
-              titulo.includes('web') ||
-              titulo.includes('html') ||
-              titulo.includes('css')
-            ) {
-              this.aplicarMaterial('Web');
+
+            } else if (titulo.includes('php')) {
+
+              this.aplicarMaterial('PHP');
+
+            } else if (titulo.includes('css')) {
+
+              this.aplicarMaterial('CSS');
+
             } else {
-              this.curso.imagen = 'assets/Angular_curso.jfif';
+
+              this.curso.imagen = 'assets/Angular.jfif';
               this.curso.video = '';
               this.curso.temas = [
                 'Introducción',
