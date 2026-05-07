@@ -7,11 +7,13 @@ import { CursoComponent } from './pages/curso/curso';
 import { authGuard } from './auth.guard';
 import { PlanesComponent } from './pages/planes/planes';
 import { ReportesComponent } from './pages/reportes/reportes';
+import { adminGuard } from '../admin.guard';
+
 
 export const routes = [
 
   { path: '', component: LoginComponent },
-  { path: 'reportes', component: ReportesComponent },
+  { path: 'reportes', component: ReportesComponent, canActivate: [adminGuard] },
   { path: 'planes', component: PlanesComponent, canActivate: [authGuard] },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'cursos', component: CursosComponent, canActivate: [authGuard] },
