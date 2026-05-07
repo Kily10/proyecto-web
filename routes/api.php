@@ -10,6 +10,7 @@ use App\Models\Pago;
 use App\Models\User;
 
 
+
 // 🔐 AUTENTICACIÓN
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -154,6 +155,30 @@ Route::get('/reporte/usuarios', function () {
     ]);
 });
 
+// ADMIN CREAR CURSO
+Route::post('/cursos', function (Request $request) {
+
+    return \App\Models\Curso::create([
+        'titulo' => $request->titulo,
+        'descripcion' => $request->descripcion,
+        'categoria' => $request->categoria,
+        'nivel' => $request->nivel
+    ]);
+});
+
+// ADMIN ELIMINAR CURSO
+Route::delete('/cursos/{id}', function ($id) {
+
+    $curso = \App\Models\Curso::find($id);
+
+    if ($curso) {
+        $curso->delete();
+    }
+
+    return response()->json([
+        'status' => 'ok'
+    ]);
+});
 
 // 🔧 TEST
 Route::get('/test', function () {
