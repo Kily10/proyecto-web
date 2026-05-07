@@ -83,3 +83,26 @@
   margin-bottom: 10px;
   color: #cbd5f5;
 }
+
+.media-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.curso-img,
+.curso-video {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 18px;
+  background: #020617;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+}
+
+@media (max-width: 800px) {
+  .media-box {
+    grid-template-columns: 1fr;
+  }
+}
