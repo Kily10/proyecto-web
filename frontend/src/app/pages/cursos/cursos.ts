@@ -4,17 +4,27 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { Router } from '@angular/router';
+import {
+  Router,
+  RouterModule
+} from '@angular/router';
+
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cursos',
   standalone: true,
-  imports: [CommonModule],
+
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
+
   templateUrl: './cursos.html',
   styleUrls: ['./cursos.css']
 })
+
 export class CursosComponent implements OnInit {
 
   cursos: any[] = [];
@@ -107,4 +117,3 @@ export class CursosComponent implements OnInit {
     });
   }
 }
-
