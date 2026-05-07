@@ -8,7 +8,8 @@ use App\Models\Historial;
 use App\Models\Suscripcion;
 use App\Models\Pago;
 use App\Models\User;
-
+use App\Models\Inscripcion;
+use App\Models\Curso;
 
 
 // 🔐 AUTENTICACIÓN
@@ -23,6 +24,7 @@ Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
 // 📊 HISTORIAL
 Route::get('/historial/{id}', function ($id) {
+
     return response()->json(
         Historial::where('user_id', $id)
             ->orderBy('created_at', 'desc')
@@ -33,14 +35,19 @@ Route::get('/historial/{id}', function ($id) {
 Route::post('/historial', function (Request $request) {
 
     if (!$request->user_id || !$request->accion) {
-        return response()->json(['error' => 'Datos incompletos'], 400);
+
+        return response()->json([
+            'error' => 'Datos incompletos'
+        ], 400);
     }
 
     return response()->json(
+
         Historial::create([
             'user_id' => $request->user_id,
             'accion' => $request->accion
         ]),
+
         201
     );
 });
@@ -52,7 +59,10 @@ Route::post('/pago', function (Request $request) {
     try {
 
         if (!$request->user_id || !$request->plan) {
-            return response()->json(['error' => 'Datos incompletos'], 400);
+
+            return response()->json([
+                'error' => 'Datos incompletos'
+            ], 400);
         }
 
         $precios = [
@@ -63,7 +73,10 @@ Route::post('/pago', function (Request $request) {
         ];
 
         if (!array_key_exists($request->plan, $precios)) {
-            return response()->json(['error' => 'Plan inválido'], 400);
+
+            return response()->json([
+                'error' => 'Plan inválido'
+            ], 400);
         }
 
         $monto = $precios[$request->plan];
@@ -111,7 +124,9 @@ Route::get('/suscripcion/{id}', function ($id) {
     try {
 
         return response()->json(
-            Suscripcion::where('user_id', $id)->latest()->first()
+            Suscripcion::where('user_id', $id)
+                ->latest()
+                ->first()
         );
 
     } catch (\Exception $e) {
@@ -127,13 +142,16 @@ Route::get('/suscripcion/{id}', function ($id) {
 
 // 💰 INGRESOS
 Route::get('/reporte/ingresos', function () {
+
     return Pago::selectRaw('plan, COUNT(*) as total, SUM(monto) as ingresos')
         ->groupBy('plan')
         ->get();
 });
 
+
 // 🔥 CURSOS MÁS INSCRITOS
 Route::get('/reporte/cursos', function () {
+
     return Historial::selectRaw('accion, COUNT(*) as total')
         ->where('accion', 'like', 'Se inscribió al curso%')
         ->groupBy('accion')
@@ -142,10 +160,12 @@ Route::get('/reporte/cursos', function () {
         ->get();
 });
 
+
 // 👥 USUARIOS
 Route::get('/reporte/usuarios', function () {
 
     $total = User::count();
+
     $activos = Suscripcion::where('fin', '>=', now())->count();
 
     return response()->json([
@@ -155,10 +175,11 @@ Route::get('/reporte/usuarios', function () {
     ]);
 });
 
+
 // ADMIN CREAR CURSO
 Route::post('/cursos', function (Request $request) {
 
-    return \App\Models\Curso::create([
+    return Curso::create([
         'titulo' => $request->titulo,
         'descripcion' => $request->descripcion,
         'categoria' => $request->categoria,
@@ -169,10 +190,11 @@ Route::post('/cursos', function (Request $request) {
     ]);
 });
 
+
 // ADMIN ELIMINAR CURSO
 Route::delete('/cursos/{id}', function ($id) {
 
-    $curso = \App\Models\Curso::find($id);
+    $curso = Curso::find($id);
 
     if ($curso) {
         $curso->delete();
@@ -183,7 +205,57 @@ Route::delete('/cursos/{id}', function ($id) {
     ]);
 });
 
+
+// 📚 INSCRIBIRSE A CURSO
+Route::post('/inscribirse', function (Request $request) {
+
+    try {
+
+        // 🔍 VERIFICAR SI YA ESTÁ INSCRITO
+        $existe = Inscripcion::where('user_id', $request->user_id)
+            ->where('curso_id', $request->curso_id)
+            ->first();
+
+        if ($existe) {
+
+            return response()->json([
+                'message' => 'Ya inscrito'
+            ]);
+        }
+
+        // 📚 CREAR INSCRIPCIÓN
+        $inscripcion = Inscripcion::create([
+            'user_id' => $request->user_id,
+            'curso_id' => $request->curso_id
+        ]);
+
+        // 🔍 OBTENER CURSO
+        $curso = Curso::find($request->curso_id);
+
+        // 📊 HISTORIAL
+        Historial::create([
+            'user_id' => $request->user_id,
+            'accion' => 'Se inscribió al curso ' . $curso->titulo
+        ]);
+
+        return response()->json([
+            'message' => 'Inscripción exitosa',
+            'inscripcion' => $inscripcion
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 500);
+    }
+});
+
+
 // 🔧 TEST
 Route::get('/test', function () {
-    return response()->json(['status' => 'ok']);
+
+    return response()->json([
+        'status' => 'ok'
+    ]);
 });
