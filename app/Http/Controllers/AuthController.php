@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Historial;
+use App\Models\Suscripcion;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    //  REGISTRO
+    // =========================
+    // REGISTRO
+    // =========================
     public function register(Request $request)
     {
         $request->validate([
@@ -22,11 +25,11 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
 
-            // IMPORTANTE: rol por defecto
+            // Rol por defecto
             'role' => 'estudiante'
         ]);
 
-        // 📊 historial
+        // Historial
         Historial::create([
             'user_id' => $user->id,
             'accion' => 'Registro de usuario'
@@ -37,24 +40,40 @@ class AuthController extends Controller
             'user' => [
                 'id' => $user->id,
                 'email' => $user->email,
-                'role' => $user->role
+                'role' => $user->role,
+
+                // Plan por defecto
+                'plan' => 'Gratis'
             ]
         ]);
     }
 
+    // =========================
     // LOGIN
+    // =========================
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
 
+        // Validar credenciales
         if (!$user || !Hash::check($request->password, $user->password)) {
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Credenciales incorrectas'
             ], 401);
         }
 
-        // 📊 historial
+        // Buscar suscripción activa
+        $suscripcion = Suscripcion::where('user_id', $user->id)
+            ->where('fin', '>=', now())
+            ->latest()
+            ->first();
+
+        // Obtener plan
+        $plan = $suscripcion ? $suscripcion->plan : 'Gratis';
+
+        // Historial
         Historial::create([
             'user_id' => $user->id,
             'accion' => 'Inicio de sesión'
@@ -65,8 +84,10 @@ class AuthController extends Controller
             'user' => [
                 'id' => $user->id,
                 'email' => $user->email,
-                'role' => $user->role
+                'role' => $user->role,
+                'plan' => $plan
             ]
         ]);
     }
 }
+
