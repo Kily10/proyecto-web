@@ -57,7 +57,6 @@ export class PagoComponent implements OnInit {
 
   pagar(): void {
 
-    // VALIDACIONES
     if (
       !this.nombre ||
       !this.tarjeta ||
@@ -70,23 +69,18 @@ export class PagoComponent implements OnInit {
       return;
     }
 
-    // ÚLTIMOS 4
-    const ultimos4 =
-      this.tarjeta.slice(-4);
-
     this.http.post(`${this.API}/pago`, {
 
       user_id: this.user.id,
-      plan: this.plan,
-      monto: this.precio,
-      metodo: 'Tarjeta',
-      ultimos4: ultimos4
+      plan: this.plan
 
     }).subscribe({
 
       next: (res: any) => {
 
-        // actualizar user
+        console.log(res);
+
+        // 🔥 actualizar plan
         this.user.plan = this.plan;
 
         localStorage.setItem(
