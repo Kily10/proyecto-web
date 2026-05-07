@@ -12,22 +12,9 @@
 
       <p>CURSOS DE PROGRAMACIÓN</p>
 
-      <div class="mensaje-header">
-        En EduFlow no solo aprendes a programar… aprendes a pensar, crear y construir tu propio futuro.
-        Cada línea de código es un paso más hacia tus metas. 🚀
-      </div>
-
     </div>
 
   </div>
-
-  <nav>
-    <ul>
-      <li>
-        <a routerLink="/">Login</a>
-      </li>
-    </ul>
-  </nav>
 
 </header>
 
@@ -73,22 +60,6 @@
       <button *ngIf="modoRegistro" (click)="register()">
         Crear Cuenta
       </button>
-
-      <div class="social-login">
-
-        <div class="divider">
-          <span></span>
-          <p>Otras opciones de inicio de sesión</p>
-          <span></span>
-        </div>
-
-        <div class="social-buttons">
-          <button class="social-btn google" type="button">G</button>
-          <button class="social-btn facebook" type="button">f</button>
-          <button class="social-btn apple" type="button"></button>
-        </div>
-
-      </div>
 
       <p class="extra" (click)="toggleModo()">
         {{ modoRegistro ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Crear una' }}

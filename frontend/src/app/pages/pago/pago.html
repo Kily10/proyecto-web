@@ -1,83 +1,296 @@
-<section class="pago-page">
+<link rel="stylesheet" href="pago.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <div class="resumen-plan">
+<div class="pago-page">
 
-    <h1>💳 Confirmar Pago</h1>
-
-    <p>Estás comprando el plan:</p>
-
-    <h2>{{ plan }}</h2>
-
-    <span class="precio">
-      ${{ precio }} / mes
-    </span>
-
-    <p class="nota">
-      Pago simulado para activar tu suscripción en EduFlow.
-    </p>
-
-  </div>
-
-  <form class="form">
-
-    <label class="label">
-      <span class="title">Nombre del titular</span>
-      <input
-        class="input-field"
-        type="text"
-        [(ngModel)]="nombre"
-        name="nombre"
-        placeholder="Ingresa tu nombre completo"
-      />
-    </label>
-
-    <label class="label">
-      <span class="title">Número de tarjeta</span>
-      <input
-        class="input-field"
-        type="text"
-        [(ngModel)]="tarjeta"
-        name="tarjeta"
-        maxlength="16"
-        placeholder="0000 0000 0000 0000"
-      />
-    </label>
-
-    <div class="split">
-
-      <label class="label">
-        <span class="title">Fecha</span>
-        <input
-          class="input-field"
-          type="text"
-          [(ngModel)]="fecha"
-          name="fecha"
-          placeholder="01/26"
-        />
-      </label>
-
-      <label class="label">
-        <span class="title">CVV</span>
-        <input
-          class="input-field"
-          type="password"
-          [(ngModel)]="cvv"
-          name="cvv"
-          maxlength="4"
-          placeholder="CVV"
-        />
-      </label>
-
+  <header class="pago-navbar">
+    <div class="logo">
+      <span class="logo-icon">✦</span> EduFlow
     </div>
+    <a routerLink="/cursos" class="btn-cancelar">Cancelar</a>
+  </header>
 
-    <button
-      class="checkout-btn"
-      type="button"
-      (click)="pagar()"
-    >
-      Confirmar Pago
-    </button>
+  <main class="pago-container">
 
-  </form>
+    <section class="pago-form-col">
 
-</section>
+      <h1 class="pago-titulo">Pagar</h1>
+
+      <div class="pago-step">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h2>Detalles de la cuenta</h2>
+        </div>
+
+        <div class="step-body cuenta-info">
+          <div class="cuenta-email">
+            <span class="email-text">{{ user.email }}</span>
+            <span class="verified-badge">Verificado</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pago-step">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h2>Dirección de facturación y método de pago</h2>
+        </div>
+
+        <div class="step-body">
+
+          <div class="form-group">
+            <label>País / Región</label>
+
+            <div class="select-wrapper">
+              <span class="select-icon">🌐</span>
+
+              <select [(ngModel)]="pais">
+                <option value="bo">Bolivia</option>
+                <option value="ar">Argentina</option>
+                <option value="co">Colombia</option>
+                <option value="mx">México</option>
+                <option value="pe">Perú</option>
+                <option value="cl">Chile</option>
+                <option value="es">España</option>
+              </select>
+            </div>
+
+            <p class="form-hint">
+              Podemos estar obligados a recaudar impuestos sobre las transacciones según tu jurisdicción fiscal.
+            </p>
+          </div>
+
+          <div class="metodo-pago">
+
+            <div class="metodo-header">
+
+              <div class="metodo-radio-label">
+                <span class="metodo-icono">
+                </span>
+
+                <label for="card-number">Tarjeta de crédito / débito</label>
+              </div>
+
+              <div class="card-brands">
+                <span>
+                </span>
+
+                <span>
+                </span>
+
+                <span>
+                </span>
+              </div>
+
+            </div>
+
+            <div class="card-form">
+
+              <div class="form-group">
+                <label for="card-number">Número de tarjeta</label>
+
+                <div class="input-icon-wrapper">
+                  <input 
+                    [(ngModel)]="tarjeta"
+                    type="text" 
+                    id="card-number"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="19"
+                  >
+                </div>
+              </div>
+
+              <div class="form-row">
+
+                <div class="form-group">
+                  <label for="card-exp">Fecha de vencimiento</label>
+
+                  <input 
+                    [(ngModel)]="fecha"
+                    type="text" 
+                    id="card-exp"
+                    placeholder="MM/AA"
+                    maxlength="5"
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="card-cvv">CVC/CVV</label>
+
+                  <input 
+                    [(ngModel)]="cvv"
+                    type="password" 
+                    id="card-cvv"
+                    placeholder="•••"
+                    maxlength="4"
+                  >
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="card-name">Nombre en la tarjeta</label>
+
+                <input 
+                  [(ngModel)]="nombre"
+                  type="text" 
+                  id="card-name"
+                  placeholder="Como aparece en tu tarjeta"
+                >
+              </div>
+
+              <div class="form-check">
+                <input type="checkbox" id="guardar-tarjeta" checked>
+
+                <label for="guardar-tarjeta">
+                  Guardar esta tarjeta de forma segura para compras futuras
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pago-step step-pedido-mobile">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h2>Resumen del pedido</h2>
+        </div>
+
+        <div class="step-body">
+
+          <div class="pedido-curso-info">
+            <div class="pedido-emoji">{{ curso.emoji }}</div>
+
+            <div>
+              <p class="pedido-curso-titulo">{{ curso.titulo }}</p>
+              <p class="pedido-curso-nivel">Plan: {{ curso.nivel }}</p>
+            </div>
+          </div>
+
+          <div class="pedido-precios">
+
+            <div class="precio-row">
+              <span>Precio original</span>
+              <span class="precio-original">${{ curso.precioOriginal }}</span>
+            </div>
+
+            <div class="precio-row descuento-row" *ngIf="curso.descuento > 0">
+              <span>Descuento aplicado</span>
+              <span class="precio-descuento">-${{ curso.descuento }}</span>
+            </div>
+
+            <div class="precio-row total-row">
+              <span>Total (1 curso)</span>
+              <strong>${{ curso.precio }}</strong>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pago-action">
+
+        <button 
+          class="btn-pagar"
+          [disabled]="!puedeComprar(curso)"
+          (click)="procesarPago(curso)"
+        >
+          Pagar ${{ curso.precio }}
+        </button>
+
+        <p class="pago-terms">
+          Al completar la compra, aceptas nuestras 
+          <a routerLink="/terminos" class="link-terminos">Condiciones de uso</a> 
+          y  
+          <a routerLink="/privacidad" class="link-terminos">Política de privacidad.</a>
+        </p>
+
+        <div class="garantia">
+          <div>
+            <strong>Garantía de reembolso de 30 días</strong>
+            <p>¿No te convence? Recibe un reembolso completo dentro de los 30 días. Sin preguntas.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <aside class="pago-resumen-col">
+
+      <div class="resumen-card">
+
+        <h3>Resumen del pedido</h3>
+
+        <div class="resumen-curso">
+          <div class="resumen-emoji">{{ curso.emoji }}</div>
+
+          <div class="resumen-curso-info">
+            <p class="resumen-titulo">{{ curso.titulo }}</p>
+            <p class="resumen-nivel">Plan requerido: {{ curso.nivel }}</p>
+            <div class="resumen-rating">{{ curso.rating }}</div>
+          </div>
+        </div>
+
+        <div class="resumen-divider"></div>
+
+        <div class="resumen-precios">
+
+          <div class="resumen-precio-row">
+            <span>Precio original</span>
+            <span class="resumen-precio-tachado">${{ curso.precioOriginal }}</span>
+          </div>
+
+          <div class="resumen-precio-row" *ngIf="curso.descuento > 0">
+            <span>Descuento</span>
+            <span class="resumen-descuento">-${{ curso.descuento }}</span>
+          </div>
+
+        </div>
+
+        <div class="resumen-divider"></div>
+
+        <div class="resumen-total">
+          <span>Total (1 curso)</span>
+          <strong class="resumen-precio-final">${{ curso.precio }}</strong>
+        </div>
+
+        <button 
+          class="btn-pagar btn-pagar-sidebar"
+          [disabled]="!puedeComprar(curso)"
+          (click)="procesarPago(curso)"
+        >
+          Pagar ${{ curso.precio }}
+        </button>
+
+        <p class="resumen-terms">
+          Al completar la compra, aceptas las 
+          <a routerLink="/terminos" class="link-terminos">Condiciones de uso</a>.
+        </p>
+
+        <div class="resumen-garantia">
+          <div>
+            <strong>Garantía de 30 días</strong>
+            <p>Reembolso completo, sin complicaciones.</p>
+          </div>
+        </div>
+
+        <div class="resumen-security">
+          <span class="security-badge">🔒 SSL Seguro</span>
+          <span class="security-badge">✅ Pago encriptado</span>
+          <span class="security-badge">🛡️ Datos protegidos</span>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+</div>
