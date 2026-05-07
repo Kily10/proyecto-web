@@ -162,7 +162,10 @@ Route::post('/cursos', function (Request $request) {
         'titulo' => $request->titulo,
         'descripcion' => $request->descripcion,
         'categoria' => $request->categoria,
-        'nivel' => $request->nivel
+        'nivel' => $request->nivel,
+        'emoji' => $request->emoji,
+        'precio' => $request->precio,
+        'rating' => $request->rating
     ]);
 });
 

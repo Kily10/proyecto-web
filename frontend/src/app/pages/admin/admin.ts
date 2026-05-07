@@ -18,6 +18,9 @@ export class AdminComponent implements OnInit {
   descripcion = '';
   categoria = '';
   nivel = '';
+  emoji = '';
+  precio = 0;
+  rating = 5;
 
   private API = 'http://127.0.0.1:8000/api';
 
@@ -37,10 +40,13 @@ export class AdminComponent implements OnInit {
   crearCurso() {
 
     const body = {
-      titulo: this.titulo,
-      descripcion: this.descripcion,
-      categoria: this.categoria,
-      nivel: this.nivel
+       titulo: this.titulo,
+       descripcion: this.descripcion,
+       categoria: this.categoria,
+       nivel: this.nivel,
+       emoji: this.emoji,
+       precio: this.precio,
+       rating: this.rating
     };
 
     this.http.post(`${this.API}/cursos`, body)
