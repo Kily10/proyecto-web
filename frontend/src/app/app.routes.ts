@@ -8,11 +8,13 @@ import { authGuard } from './auth.guard';
 import { PlanesComponent } from './pages/planes/planes';
 import { ReportesComponent } from './pages/reportes/reportes';
 import { adminGuard } from '../admin.guard';
+import { AdminComponent } from './pages/admin/admin';
 
 
 export const routes = [
 
   { path: '', component: LoginComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [authGuard] },
   { path: 'reportes', component: ReportesComponent, canActivate: [adminGuard] },
   { path: 'planes', component: PlanesComponent, canActivate: [authGuard] },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },

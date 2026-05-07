@@ -1,1 +1,39 @@
-<p>admin works!</p>
+<div class="admin">
+
+  <h1>⚙ Panel Admin</h1>
+
+  <h2>➕ Crear Curso</h2>
+
+  <input [(ngModel)]="titulo" placeholder="Título">
+
+  <input [(ngModel)]="descripcion" placeholder="Descripción">
+
+  <input [(ngModel)]="categoria" placeholder="Categoría">
+
+  <input [(ngModel)]="nivel" placeholder="Nivel">
+
+  <button (click)="crearCurso()">
+    Crear Curso
+  </button>
+
+  <hr>
+
+  <h2>📚 Cursos</h2>
+
+  <div class="card" *ngFor="let c of cursos">
+
+    <p><b>{{ c.titulo }}</b></p>
+
+    <p>{{ c.descripcion }}</p>
+
+    <p>{{ c.categoria }}</p>
+
+    <p>{{ c.nivel }}</p>
+
+    <button (click)="eliminarCurso(c.id)">
+      Eliminar
+    </button>
+
+  </div>
+
+</div>
